@@ -22,7 +22,7 @@ class Frame:
             if value[0] == ingredient:
                 value[1] = True
 
-    #*restituisce il primo ingrediente non ancora dichiarato dall'utente (False)
+    #!restituisce il primo ingrediente non ancora dichiarato dall'utente (False)
     def get_ingredient(self):
         for value in self.ingredients.values():
             if value[1] == False:
