@@ -1,43 +1,47 @@
+from potion import Potion
+
 class Frame:
 
-    def __init__(self, potion_name):
-        self.potion_name = potion_name
-        self.ingredients = {}
-        self.n_ingredients = 0
-
-    def get_n_ingredients(self):
-        return self.n_ingredients
+    def __init__(self, list_of_potions):
+        self.potions = {}
+        self.nome_interrogato = ""
+        self.add_potions(list_of_potions)
     
-    def add_ingredient(self, ingredient):
-        self.ingredients[self.n_ingredients] = [ingredient, False]
-        self.n_ingredients += 1
-
-    def remove_ingredient(self, ingredient):
-        for key, value in self.ingredients.items():
-            if value[0] == ingredient:
-                del self.ingredients[key]
-                self.n_ingredients -= 1
-                return
-        return "Ingredient not found"
+    # aggiungo la lista di pozioni al dizionario del frame
+    def add_potions(self, list_of_potions):
+        for potion in list_of_potions:
+            self.potions[potion.get_potion_name()] = potion.get_ingredients()
     
     def to_string(self):
-        return f"Ricetta: {self.potion_name} con ingredienti {self.ingredients}"
-
-    #* restituisce il valore di verità dell'ingrediente passato come parametro
+        res = ""
+        for i in self.potions.keys():
+            res += f"Ricette: {i} con ingredienti {self.potions[i]}\n"
+        return res
+'''
     def check_response(self, ingredient):
         for value in self.ingredients.values():
             if value[0] == ingredient:
                 return value[1]
 
-    #* setta a True l'ingrediente passato come parametro
+    #*setto a True l'ingrediente passato come parametro
     def set_ingredient(self, ingredient):
         for value in self.ingredients.values():
             if value[0] == ingredient:
                 value[1] = True
 
-    #* restituisce il primo ingrediente non ancora dichiarato dall'utente (False)
+    #*restituisce il primo ingrediente non ancora dichiarato dall'utente (False)
     def get_ingredient(self):
         for value in self.ingredients.values():
             if value[1] == False:
                 return value[0]
         return "No more ingredients"
+'''
+potions = []
+potions.append(Potion("Pozione Polissucchio", ["A","B","C"]))
+potions.append(Potion("Pozione Invisibilità", ["D","E","F"]))
+potions.append(Potion("Pozione Morte", ["G","H","I"]))
+
+memoria_piton = Frame(potions)
+
+print(memoria_piton.to_string())
+
