@@ -12,10 +12,13 @@ class Frame:
         self.ingredients[self.n_ingredients] = [ingredient, False]
         self.n_ingredients += 1
 
-    #* aggiungere calcolo di index così da poter chamare la funzione con ingredient come parametro
-    #! probabilmente non è necessaria
-    def remove_ingredient(self, index):
-        self.ingredients.pop(list(self.ingredients)[index])
+    def remove_ingredient(self, ingredient):
+        for key, value in self.ingredients.items():
+            if value[0] == ingredient:
+                del self.ingredients[key]
+                self.n_ingredients -= 1
+                return
+        return "Ingredient not found"
     
     def to_string(self):
         return f"Ricetta: {self.potion_name} con ingredienti {self.ingredients}"
