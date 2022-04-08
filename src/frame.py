@@ -56,6 +56,8 @@ class Frame:
         for i in self.potions[self.potion_name]:
             if i.lower() == ingredient.lower():
                 self.student_ingredients.append(i)
+                return True
+        return False
 '''
     #*setto a True l'ingrediente passato come parametro
     def set_ingredient(self, ingredient):
