@@ -4,7 +4,7 @@ class Frame:
 
     def __init__(self):
         self.potions = {} 
-        self.student_ingredients = [] # memorizza gli ingredienti azzeccati dallo studente
+        self.student_ingredients = [] # memorizza le risposte corrette (ingredienti) dello studente
         self.potion_name = "" # il nome della pozione oggetto dell'interrogazione
         self.student_name = ""
         self.student_potion_name = "" #! domanda infame: ti chiedo il nome della pozione dandoti gli ingredienti
@@ -17,6 +17,9 @@ class Frame:
     def set_potion_name(self, potion_name):
         self.potion_name = potion_name
     
+    def get_student_ingredients(self):
+        return self.student_ingredients
+
     def get_student_name(self):
         return self.student_name
 
@@ -31,7 +34,7 @@ class Frame:
     
     # aggiungo la lista di pozioni al dizionario del frame leggendole da potions.txt
     def add_potions(self):
-        file = open("Severus-Python/data/potions.txt", "r")
+        file = open("/home/fazza/Documents/Severus-Python/data/potions.txt", "r")
         for line in file:
             p = list(line.strip("\n").split(','))
             p_name = p[0]
@@ -47,13 +50,13 @@ class Frame:
         for p in self.potions.keys():
             res += f"{p}, ingredienti: {self.potions[p]} \n"
         return res
-'''
 
+    # controllo che l'ingrediente sia corretto e se lo è lo aggiungo alle risposte corrette
     def check_response(self, ingredient):
-        for value in self.ingredients.values():
-            if value[0] == ingredient:
-                return value[1]
-
+        for i in self.potions[self.potion_name]:
+            if i.lower() == ingredient.lower():
+                self.student_ingredients.append(i)
+'''
     #*setto a True l'ingrediente passato come parametro
     def set_ingredient(self, ingredient):
         for value in self.ingredients.values():
@@ -67,3 +70,11 @@ class Frame:
                 return value[0]
         return "No more ingredients"
 '''
+
+f = Frame()
+
+f.set_potion_name("Pozione Polisucco") #Estratta a caso
+
+f.check_response("mosche crisopa")
+
+print(f.get_student_ingredients())
