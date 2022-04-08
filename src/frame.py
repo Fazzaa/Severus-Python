@@ -3,9 +3,11 @@ from potion import Potion
 class Frame:
 
     def __init__(self, list_of_potions):
-        self.potions = {}
-        self.potion_name = ""
+        self.potions = {} 
+        self.student_ingredients = [] # memorizza gli ingredienti azzeccati dallo studente
+        self.potion_name = "" # il nome della pozione oggetto dell'interrogazione
         self.student_name = ""
+        self.student_potion_name = "" #! domanda infame: ti chiedo il nome della pozione dandoti gli ingredienti
         self.add_potions(list_of_potions)
         self.mood = 0 # from 0 to 10 (0 = happy, 10 = angry)
 
@@ -34,7 +36,10 @@ class Frame:
     
     def to_string(self):
         res = ""
-        res = f"{res}Pozione scelta per l'interrogazione: {self.potion_name}\nStudente interrogato: {self.student_name}\nElenco pozioni conosciute:\n"
+        res = f"{res}Pozione scelta per l'interrogazione: {self.potion_name}\n" \
+              f"Studente interrogato: {self.student_name}\n"\
+              f"Elenco pozioni conosciute:\n"
+
         for i in self.potions.keys():
             res += f"{i}, ingredienti: {self.potions[i]} \n"
         return res
@@ -59,7 +64,7 @@ class Frame:
         return "No more ingredients"
 '''
 potions = []
-potions.append(Potion("Pozione Polissucchio", ["A","B","C"]))
+potions.append(Potion("Pozione Polisucco", ["A","B","C"]))
 potions.append(Potion("Pozione Invisibilità", ["D","E","F"]))
 potions.append(Potion("Pozione Morte", ["G","H","I"]))
 
