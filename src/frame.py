@@ -4,20 +4,42 @@ class Frame:
 
     def __init__(self, list_of_potions):
         self.potions = {}
-        self.nome_interrogato = ""
+        self.potion_name = ""
+        self.student_name = ""
         self.add_potions(list_of_potions)
+        self.mood = 0 # from 0 to 10 (0 = happy, 10 = angry)
+
+    def get_potion_name(self):
+        return self.potion_name
+
+    def set_potion_name(self, potion_name):
+        self.potion_name = potion_name
+    
+    def get_student_name(self):
+        return self.student_name
+
+    def set_student_name(self, student_name):
+        self.student_name = student_name
+
+    def get_mood(self):
+        return self.mood
+
+    def set_mood(self, mood):
+        self.mood = mood
     
     # aggiungo la lista di pozioni al dizionario del frame
     def add_potions(self, list_of_potions):
-        for potion in list_of_potions:
-            self.potions[potion.get_potion_name()] = potion.get_ingredients()
+        for i in list_of_potions:
+            self.potions[i.get_potion_name()] = i.get_ingredients()
     
     def to_string(self):
         res = ""
+        res = f"{res}Pozione scelta per l'interrogazione: {self.potion_name}\nStudente interrogato: {self.student_name}\nElenco pozioni conosciute:\n"
         for i in self.potions.keys():
-            res += f"Ricette: {i} con ingredienti {self.potions[i]}\n"
+            res += f"{i}, ingredienti: {self.potions[i]} \n"
         return res
 '''
+
     def check_response(self, ingredient):
         for value in self.ingredients.values():
             if value[0] == ingredient:
