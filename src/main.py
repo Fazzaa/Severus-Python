@@ -3,6 +3,7 @@ from potion import Potion
 from frame import Frame
 import spacy
 from nltk import Tree
+
 #funzione che restituisce una frase randomica da una lista di frasi
 def pick_random_start(phrases_list):
     return random.choice(phrases_list)
@@ -14,6 +15,8 @@ def pick_random_start(phrases_list):
 nlp = spacy.load('it_core_news_sm')
 
 doc = nlp("Nella pozione polisucco sono presenti i sassi") 
+
+
 
 def to_nltk_tree(node):
     if node.n_lefts + node.n_rights > 0:
