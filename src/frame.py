@@ -34,7 +34,7 @@ class Frame:
     
     # aggiungo la lista di pozioni al dizionario del frame leggendole da potions.txt
     def add_potions(self):
-        file = open("/home/fazza/Documents/Severus-Python/data/potions.txt", "r")
+        file = open("/home/andrea/Desktop/Università/TLN/Parte 1/Progetto /Severus-Python/data/potions.txt", "r")
         for line in file:
             p = list(line.strip("\n").split(','))
             p_name = p[0]
@@ -58,20 +58,6 @@ class Frame:
                 self.student_ingredients.append(i)
                 return True
         return False
-'''
-    #*setto a True l'ingrediente passato come parametro
-    def set_ingredient(self, ingredient):
-        for value in self.ingredients.values():
-            if value[0] == ingredient:
-                value[1] = True
-
-    #*restituisce il primo ingrediente non ancora dichiarato dall'utente (False)
-    def get_ingredient(self):
-        for value in self.ingredients.values():
-            if value[1] == False:
-                return value[0]
-        return "No more ingredients"
-'''
 
 f = Frame()
 
