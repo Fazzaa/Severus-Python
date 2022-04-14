@@ -15,7 +15,7 @@ def pick_random_start(phrases_list):
 
 nlp = spacy.load('it_core_news_sm')
 
-doc = nlp("Nella pozione polisucco sono presenti i sassi") 
+doc = nlp("Nella pozione Polisucco ci sono i sassi") 
 displacy.serve(doc, style='dep')
 
 def to_nltk_tree(node):
