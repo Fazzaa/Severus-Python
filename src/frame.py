@@ -59,6 +59,8 @@ class Frame:
                 return True
         return False
 
+
+#TESTING
 f = Frame()
 
 f.set_potion_name("Pozione Polisucco") #Estratta a caso

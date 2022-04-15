@@ -11,11 +11,9 @@ def pick_random_start(phrases_list):
 
 '''da spostare'''
 
-
-
 nlp = spacy.load('it_core_news_sm')
 
-doc = nlp("Nella pozione Polisucco ci sono i sassi") 
+doc = nlp("La risposta è la mosca Crisopa") 
 displacy.serve(doc, style='dep')
 
 def to_nltk_tree(node):
@@ -44,8 +42,9 @@ def profundity_research(tree):
     else:
         print(tree)
 
+
 t = to_tree(doc)
-print(t)
+print(f"Print tree: {t}")
 
 pretty_print_tree(doc)
 profundity_research(t)
