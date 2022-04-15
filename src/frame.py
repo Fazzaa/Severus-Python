@@ -52,6 +52,7 @@ class Frame:
         return res
 
     # controllo che l'ingrediente sia corretto e se lo è lo aggiungo alle risposte corrette (se non è già stato detto)
+    #TODO:lavorare su stemming e rimozioni parti non necessarie 
     def check_response(self, ingredient):
         for i in self.potions[self.potion_name]:
             if i.lower() == ingredient.lower()  and (i not in self.student_ingredients):
