@@ -1,9 +1,10 @@
 import random
+import time
 from potion import Potion
 from frame import Frame
 import spacy
-from nltk import Tree
-from spacy.symbols import cop
+# from nltk import Tree
+#from spacy.symbols import cop
 from nltk.stem import SnowballStemmer
 
 
@@ -32,9 +33,66 @@ def find_ing_by_copula(sentence):
 f = Frame()
 f.set_potion_name('Pozione Polisucco')
 doc = nlp("La risposta esatta è le mosche Crisopa.") 
+
+#! per capire quale funzione è più veloce
+start1 = time.time() 
 asw = find_ing_by_copula(doc)
+end1 = time.time()
+print(f"metodo 1 ci mette {end1 - start1} secondi :(")
+
 f.check_response(asw)   
 print(f"Ingredienti giusti: {f.get_student_ingredients()}")
+
+'''----------------------------------------------------------------------------------------------------------------------'''
+#* Alternativa con matcher per riconoscere il pattern:
+# matcher spacy http://spacy.pythonhumanities.com/02_02_matcher.html#
+# si utlizza la stessa funzione per riconoscere i vari pattern, si possono così
+# creare più pattern da usare a seconda della parola senza dover fare 50 funzioni
+
+import spacy
+from spacy.matcher import Matcher
+
+nlp = spacy.load('en_core_web_sm')
+
+def get_matched_patterns(name_pattern, pattern, text):
+    # funzione che usa il matcher di spacy per riconoscere il pattern passato come parametro in un testo
+    # ordina gli elementi che fanno match col pattern e poi restituisce una lista di frasi che lo soddisfano
+    matched_elements = [] 
+    matcher = Matcher(nlp.vocab)
+    matcher.add(name_pattern, [pattern], greedy="LONGEST")
+    doc = nlp(text)
+    matches = matcher(doc)
+    matches.sort(key = lambda x : x[1])
+    matched_elements = [(nlp.vocab[matches[0][0]].text, doc[match[1]:match[2]][1:]) for match in matches] 
+    #[1:] perchè il primo elemento è l'ausiliare che non voglio nella lista
+    # stampati matches e vedrai che queste oeprazioni avranno senso
+    return matched_elements
+
+pattern = [
+    #{"LEMMA" : {"IN" : ["be", "contain", "use", "need", "have"]}},
+    {"DEP" : "ROOT"},
+    {"IS_ALPHA" : True, "OP": "+"}
+]
+
+answer1 = "the answer is Crisopa Fly..."
+answer2 = "the potion contains Crisopa fly"
+answer3 = "The first ingredient of the postion is the Crisopa fly"
+
+start2 = time.time()
+print(get_matched_patterns("aux_pattern", pattern, answer1))
+print(get_matched_patterns("aux_pattern", pattern, answer2))
+print(get_matched_patterns("aux_pattern", pattern, answer3)) 
+end2 = time.time()
+print(f"metodo 2 ci mette {end2 - start2} secondi :)")
+
+
+'''
+implementare modo per togliere l'articolo dalla frase matchata, si può fare direttamente nel frame nella funzione check_response
+così il match è più facile e si ottengono informazioni belle
+'''
+
+
+
 
 
 '''
