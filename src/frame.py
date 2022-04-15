@@ -51,7 +51,7 @@ class Frame:
             res += f"{p}, ingredienti: {self.potions[p]} \n"
         return res
 
-    # controllo che l'ingrediente sia corretto e se lo è lo aggiungo alle risposte corrette
+    # controllo che l'ingrediente sia corretto e se lo è lo aggiungo alle risposte corrette (se non è già stato detto)
     def check_response(self, ingredient):
         for i in self.potions[self.potion_name]:
             if i.lower() == ingredient.lower()  and (i not in self.student_ingredients):
