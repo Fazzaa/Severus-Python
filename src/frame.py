@@ -3,7 +3,7 @@ from potion import Potion
 class Frame:
 
     def __init__(self):
-        self.potions = {} 
+        self.potions = {}
         self.student_ingredients = [] # memorizza le risposte corrette (ingredienti) dello studente
         self.potion_name = "" # il nome della pozione oggetto dell'interrogazione
         self.student_name = ""
@@ -34,7 +34,7 @@ class Frame:
     
     # aggiungo la lista di pozioni al dizionario del frame leggendole da potions.txt
     def add_potions(self):
-        file = open("/home/andrea/Desktop/Università/TLN/Parte 1/Progetto /Severus-Python/data/potions.txt", "r")
+        file = open("/home/fazza/Documents/Severus-Python/data/potions.txt", "r")
         for line in file:
             p = list(line.strip("\n").split(','))
             p_name = p[0]
@@ -54,7 +54,7 @@ class Frame:
     # controllo che l'ingrediente sia corretto e se lo è lo aggiungo alle risposte corrette
     def check_response(self, ingredient):
         for i in self.potions[self.potion_name]:
-            if i.lower() == ingredient.lower():
+            if i.lower() == ingredient.lower()  and (i not in self.student_ingredients):
                 self.student_ingredients.append(i)
                 return True
         return False
@@ -64,5 +64,8 @@ f = Frame()
 f.set_potion_name("Pozione Polisucco") #Estratta a caso
 
 f.check_response("mosche crisopa")
+f.check_response("mosche crisopa")
 
 print(f.get_student_ingredients())
+
+
