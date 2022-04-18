@@ -3,22 +3,23 @@ import time
 from potion import Potion
 from frame import Frame
 import spacy
-# from nltk import Tree
+from nltk.stem import SnowballStemmer # Stemmer Italiano
+#from nltk import Tree
 #from spacy.symbols import cop
-from nltk.stem import SnowballStemmer
 
-
-#HINT1: SE AUX È PRESENTE -> INGREDIENTE È COPULA DI AUX
-#HINT2: SE VERB È PRESENTE -> INGREDIENTE NSUBJ DI VERB
-#HINT3: SE NON È PRESENTE NE VERB NE AUX -> È TUTTO INGREDIENTE
-
-#funzione che restituisce una frase randomica da una lista di frasi
-def pick_random_start(phrases_list):
-    return random.choice(phrases_list)
+# HINT1: SE AUX È PRESENTE -> INGREDIENTE È COPULA DI AUX
+# HINT2: SE VERB È PRESENTE -> INGREDIENTE NSUBJ DI VERB
+# HINT3: SE NON È PRESENTE NE VERB NE AUX -> È TUTTO INGREDIENTE
 
 nlp = spacy.load('it_core_news_sm')
 
-#Cerca la copula nella frase, se è presente salva la parte successiva come ingrediente (HINT1)
+
+# Return a randonmly selected element from a list - Used for the random ingredient
+def pick_random_start(phrases_list):
+    return random.choice(phrases_list)
+
+# Find the copula in the sentence and return the remainder of the sentence 
+# after the copula if present (excluding the copula) - HINT1
 def find_ing_by_copula(sentence):
     answer = ""
     start_copy = False
