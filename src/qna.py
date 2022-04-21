@@ -1,5 +1,4 @@
 # Piton question and answer
-from unittest import TestCase
 import simplenlg as nlg
 
 lexicon = nlg.Lexicon.getDefaultLexicon()
