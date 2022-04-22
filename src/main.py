@@ -194,7 +194,7 @@ end2 = time.time()
 
 
 
-print(f"metodo 2 ci mette {end2 - start2} secondi :)")
+print(f"metodo 3 ci mette {end2 - start2} secondi :)")
 
 
 '''
