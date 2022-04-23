@@ -34,7 +34,7 @@ class Frame:
     
     # aggiungo la lista di pozioni al dizionario del frame leggendole da potions.txt
     def add_potions(self):
-        file = open("/home/andrea/Desktop/Università/TLN/Parte 1/Severus-Python/data/potions.txt", "r")
+        file = open("data/potions.txt", "r")
         for line in file:
             p = list(line.strip("\n").split(','))
             p_name = p[0]
