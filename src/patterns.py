@@ -4,7 +4,7 @@ pattern = [
 ]
 
 ################DEP PARSER#####################
-pattern_1 = [
+pattern_aux = [
     {"RIGHT_ID": "attr",
     "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["be", "use", "need", "have"]}}
     },
@@ -16,7 +16,7 @@ pattern_1 = [
 ]
 
 #? Abbozzato, funziona per la frase con contains, ma probabilmente si può generalizzare
-pattern_2 = [
+pattern_verb = [
     {"RIGHT_ID": "contains",
     "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["contain"]}}
     },

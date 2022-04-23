@@ -22,16 +22,16 @@ class TestDialogueManagerMethods(unittest.TestCase):
         result = dm.get_matched_patterns_from_dependency("passive_pattern", passive_pattern, answer)[0]
         self.assertEqual(result[1].text, "Crisopa fly")
 
-    def test_pattern_1(self):
+    def test_pattern_aux(self):
         dm = DialogManager()
         answer = "the answer is Crisopa Fly..."
-        result = dm.get_matched_patterns_from_dependency("pattern_1", pattern_1, answer)[0]
+        result = dm.get_matched_patterns_from_dependency("pattern_aux", pattern_aux, answer)[0]
         self.assertEqual(result[1].text, "Crisopa Fly")
 
-    def test_pattern_2(self):
+    def test_pattern_verb(self):
         dm = DialogManager()
         answer = "the potion contains Crisopa fly"
-        result = dm.get_matched_patterns_from_dependency("pattern_2", pattern_2, answer)[0]
+        result = dm.get_matched_patterns_from_dependency("pattern_2", pattern_verb, answer)[0]
         self.assertEqual(result[1].text, "Crisopa fly")
 
 if __name__ == '__main__':
