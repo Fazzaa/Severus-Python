@@ -1,7 +1,5 @@
-from potion import Potion
-
 class Frame:
-
+    
     def __init__(self):
         self.potions = {}
         self.student_ingredients = [] # memorizza le risposte corrette (ingredienti) dello studente
@@ -10,6 +8,9 @@ class Frame:
         self.student_potion_name = "" #! domanda infame: ti chiedo il nome della pozione dandoti gli ingredienti
         self.add_potions()
         self.mood = 0 # from 0 to 10 (0 = happy, 10 = angry)
+
+    def get_potions_length(self):
+        return len(self.potions)
 
     def get_potion_name(self):
         return self.potion_name
@@ -40,6 +41,7 @@ class Frame:
             p_name = p[0]
             p_ing = p[1:]
             self.potions[p_name] = p_ing
+        file.close()
     
     def to_string(self):
         res = ""
@@ -59,16 +61,5 @@ class Frame:
                 self.student_ingredients.append(i)
                 return True
         return False
-
-
-#TESTING
-f = Frame()
-
-f.set_potion_name("Pozione Polisucco") #Estratta a caso
-
-f.check_response("mosche crisopa")
-f.check_response("mosche crisopa")
-
-print(f.get_student_ingredients())
 
 

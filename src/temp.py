@@ -52,19 +52,6 @@ answer4 = "Crisopa fly is used in the potion" #pattern 2 OK
 answer5 = "Crisopa Fly is needed in the potion" #pattern 2 OK
 answer6 = "I think that Crisopa Fly is needed in the potion" #pattern 2 OK
 
-start2 = time.time()
-print(get_matched_patterns_from_dependency("aux_pattern", pattern1, answer1)) 
-print(get_matched_patterns_from_dependency("aux_pattern", pattern2, answer2))
-print(get_matched_patterns_from_dependency("aux_pattern", pattern1, answer3))
-print(get_matched_patterns_from_dependency("aux_pattern", passive_pattern, answer4))
-print(get_matched_patterns_from_dependency("aux_pattern", passive_pattern, answer5))
-print(get_matched_patterns_from_dependency("aux_pattern", passive_pattern, answer6))
-end2 = time.time()
-
-
-
-print(f"metodo 3 ci mette {end2 - start2} secondi :)")
-
 
 '''
 #STEMMER ITALIANO
