@@ -13,23 +13,9 @@ class DialogManager:
     def __init__(self):
         self.nlp = spacy.load('en_core_web_sm')
         
-    def pick_random_start(phrases_list):
+    def pick_random(phrases_list):
         """Return a random element from a list."""
         return random.choice(phrases_list)
-
-    # For italian version
-    def find_ing_by_copula(self, sentence):
-        """"Find the copula in the sentence and return
-        returns the sequence of characters after the copula"""
-        answer = ""
-        start_copy = False
-        for token in sentence:
-            if start_copy:
-                if token.dep_ != 'det' and not token.is_punct:
-                    answer += " " + token.text
-            if token.dep_ == 'cop':
-                start_copy = True
-        return answer.strip()
 
     #* Alternativa con matcher per riconoscere il pattern:
     #* matcher spacy http://spacy.pythonhumanities.com/02_02_matcher.html#
@@ -49,15 +35,16 @@ class DialogManager:
         # stampati matches e vedrai che queste oeprazioni avranno senso
         return matched_elements
     
-    ''' 
-    TODO: implementare modo per togliere l'articolo dalla frase matchata, si può fare direttamente nel 
-    frame nella funzione check_response così il match è più facile e si ottengono informazioni belle
-    '''    
+    
+    #TODO: implementare modo per togliere l'articolo dalla frase matchata, si può fare direttamente nel 
+    #TODO: frame nella funzione check_response così il match è più facile e si ottengono informazioni belle
+        
     
     #* Alternativa con dependency matcher per riconoscere il pattern
     # TODO: DISCLAIMER: i nomi dei pattern e dei vari attributi sono opinabili, lo so. Sentitevi liberi di cambiarli.
     # TODO: riuscire a passare in input una lista di patter (?) e magari una lista di nomi di pattern associati 
     # TODO: (in modo da riuscire a capire quale pattern ha fatto match e avere il nome del pattern)
+    
     def get_matched_patterns_from_dependency(self, name_pattern, pattern, text):
         '''Recognizes the pattern passed as a parameter within a text using the spacy dependency matcher'''
         matched_elements = [] 
