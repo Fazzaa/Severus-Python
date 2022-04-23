@@ -78,8 +78,8 @@ def ask_not_contain(potion):
 
 
 # Test
-print(ask_ingredients_be("Polyjuice"))
-print(ask_ingredient_contain("Polyjuice"))
-print(ask_ingredient_contain_else("Polyjuice"))
-print(ask_ingredient_between("Polyjuice", "Crisopa Fly", "Murtlap's tentacle"))
-print(ask_not_contain("Polyjuice"))
+print(ask_ingredients_be("Polyjuice potion"))
+print(ask_ingredient_contain("Polyjuice potion"))
+print(ask_ingredient_contain_else("Polyjuice potion"))
+print(ask_ingredient_between("Polyjuice potion", "Crisopa Fly", "Murtlap's tentacle"))
+print(ask_not_contain("Polyjuice potion"))
