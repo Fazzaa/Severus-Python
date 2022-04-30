@@ -1,5 +1,7 @@
 # Piton question and answer
 import simplenlg as nlg
+from dialogmanager import DialogManager
+
 
 lexicon = nlg.Lexicon.getDefaultLexicon()
 nlg_factory = nlg.NLGFactory(lexicon)
@@ -10,11 +12,19 @@ realiser = nlg.Realiser(lexicon)
 #! cosa cambia tra queste generate con questo bel criterio logico e quelle scritte banalmente tipo 
 #! "Which ingredients contains f{potion}?" ??? 
 
+
+
 #* idea per rendere il tutto meno statico, aggiungere funzioni random che cambiano le comppnenti delle frasi
 #* tipo una lista di verbi tra cui scegliere al posto di "contains" ecc...
 
 # L'idea è che il dialogue manager scelga quali di queste funzioni usare 
 # a seconda delle risposte dell'utente
+
+def greetings():
+    sentence = nlg_factory.createClause()
+    subject = nlg_factory.createNounPhrase()
+
+
 
 # frase del tipo: "Which ingredients are in Polyjuice potion ingredient's list?"
 def ask_ingredients_be(potion):
@@ -75,6 +85,8 @@ def ask_not_contain(potion):
     sentence.addComplement("at all")
     output = realiser.realiseSentence(sentence)
     return output
+
+
 
 
 # Test
