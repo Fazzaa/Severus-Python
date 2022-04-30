@@ -1,12 +1,15 @@
 # Piton question and answer
 import simplenlg as nlg
-from dialogmanager import DialogManager
+from dialogmanager import *
+from constants import *
+from frame import Frame
 
 
+frame = Frame()
 lexicon = nlg.Lexicon.getDefaultLexicon()
 nlg_factory = nlg.NLGFactory(lexicon)
 realiser = nlg.Realiser(lexicon) 
-c = 5
+
 #! dubbio esistenziale, tutta sta libreria mi sembra inutile, si assemblano le frasi logicamente ma alla fine è come se le avessi scritte a mano
 #! chiedere a Mazzei come va usata per email, per avere meno paranoie.
 #! cosa cambia tra queste generate con questo bel criterio logico e quelle scritte banalmente tipo 
@@ -20,10 +23,35 @@ c = 5
 # L'idea è che il dialogue manager scelga quali di queste funzioni usare 
 # a seconda delle risposte dell'utente
 
+# frase di inizio
 def greetings():
-    sentence = nlg_factory.createClause()
-    subject = nlg_factory.createNounPhrase()
+    subject = nlg_factory.createNounPhrase(pick_random(GREETINGS))
+    sentence = nlg_factory.createClause(subject)
 
+    verb = nlg_factory.createVerbPhrase("be")
+    subj = nlg_factory.createNounPhrase("name")
+    subj.addPreModifier("your")
+    sentence2 = nlg_factory.createClause(subj, verb)
+    sentence2.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
+    
+    output = realiser.realiseSentence(sentence)
+    output = f"{output} {realiser.realiseSentence(sentence2)}"
+    return output
+
+
+def start_interview(frame):
+    s1 = nlg_factory.createSentence(f"Well Mr. {frame.get_student_name()}")
+
+    verb = nlg_factory.createVerbPhrase("start")
+    verb.setFeature(nlg.Feature.PERSON, nlg.Person.SECOND)
+    verb.addPreModifier("Let's")
+    obj = nlg_factory.createNounPhrase("interview")
+    obj.addPreModifier("the")
+    s2 = nlg_factory.createClause(verb, obj)
+
+    output = realiser.realiseSentence(s1)
+    output = f"{output} {realiser.realiseSentence(s2)}"
+    return output
 
 
 # frase del tipo: "Which ingredients are in Polyjuice potion ingredient's list?"
@@ -37,7 +65,6 @@ def ask_ingredients_be(potion):
     sentence = nlg_factory.createClause(subject, verb, object)
     sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.YES_NO)
     output = realiser.realiseSentence(sentence)
-    print(c)
     return output
 
 # frase del tipo: "What does Polyjuice potion contain?"
@@ -91,8 +118,13 @@ def ask_not_contain(potion):
 
 
 # Test
+'''
 print(ask_ingredients_be("Polyjuice potion"))
 print(ask_ingredient_contain("Polyjuice potion"))
 print(ask_ingredient_contain_else("Polyjuice potion"))
 print(ask_ingredient_between("Polyjuice potion", "Crisopa Fly", "Murtlap's tentacle"))
 print(ask_not_contain("Polyjuice potion"))
+print(greetings())
+'''
+
+print(start_interview(frame))
