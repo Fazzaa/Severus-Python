@@ -11,9 +11,16 @@ class Frame:
         self.add_potions()
         self.potion_name = pick_random(list(self.potions.keys())) # il nome della pozione oggetto dell'interrogazione
         self.mood = random.randint(0,2) # from 0 to 2 (0 = happy, 1 = neutral, 2 = angry)
+        self.chances = len(self.potions[self.potion_name]) - self.mood
 
     def get_potions_length(self):
         return len(self.potions)
+
+    def get_chances(self):
+        return self.chances
+
+    def get_ingredients_number(self):
+        return len(self.potions[self.potion_name])
 
     def get_potion_name(self):
         return self.potion_name
@@ -29,6 +36,9 @@ class Frame:
 
     def set_student_name(self, student_name):
         self.student_name = student_name
+        if "potter" in self.student_name.lower():
+            self.mood = 3
+            self.chances = 1
 
     def get_mood(self):
         return self.mood
@@ -63,6 +73,7 @@ class Frame:
             if i.lower() == ingredient.lower()  and (i not in self.student_ingredients):
                 self.student_ingredients.append(i)
                 return True
+        self.chances -= 1
         return False
 
 
