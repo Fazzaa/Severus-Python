@@ -6,7 +6,7 @@ from dialogmanager import DialogManager
 lexicon = nlg.Lexicon.getDefaultLexicon()
 nlg_factory = nlg.NLGFactory(lexicon)
 realiser = nlg.Realiser(lexicon) 
-
+c = 5
 #! dubbio esistenziale, tutta sta libreria mi sembra inutile, si assemblano le frasi logicamente ma alla fine è come se le avessi scritte a mano
 #! chiedere a Mazzei come va usata per email, per avere meno paranoie.
 #! cosa cambia tra queste generate con questo bel criterio logico e quelle scritte banalmente tipo 
@@ -37,6 +37,7 @@ def ask_ingredients_be(potion):
     sentence = nlg_factory.createClause(subject, verb, object)
     sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.YES_NO)
     output = realiser.realiseSentence(sentence)
+    print(c)
     return output
 
 # frase del tipo: "What does Polyjuice potion contain?"

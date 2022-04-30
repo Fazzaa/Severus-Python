@@ -1,6 +1,6 @@
 import unittest
 from frame import Frame
-from dialogmanager import DialogManager
+from dialogmanager import *
 from patterns import *
 
 class TestFrameMethods(unittest.TestCase):
@@ -17,21 +17,18 @@ class TestFrameMethods(unittest.TestCase):
 class TestDialogueManagerMethods(unittest.TestCase):
 
     def test_passive_pattern(self):
-        dm = DialogManager()
         answer = "Crisopa fly is used in the potion"
-        result = dm.get_matched_patterns_from_dependency("passive_pattern", passive_pattern, answer)[0]
+        result = get_matched_patterns_from_dependency("passive_pattern", passive_pattern, answer)[0]
         self.assertEqual(result[1].text, "Crisopa fly")
 
     def test_pattern_aux(self):
-        dm = DialogManager()
         answer = "the answer is Crisopa Fly..."
-        result = dm.get_matched_patterns_from_dependency("pattern_aux", pattern_aux, answer)[0]
+        result = get_matched_patterns_from_dependency("pattern_aux", pattern_aux, answer)[0]
         self.assertEqual(result[1].text, "Crisopa Fly")
 
     def test_pattern_verb(self):
-        dm = DialogManager()
         answer = "the potion contains Crisopa fly"
-        result = dm.get_matched_patterns_from_dependency("pattern_2", pattern_verb, answer)[0]
+        result = get_matched_patterns_from_dependency("pattern_2", pattern_verb, answer)[0]
         self.assertEqual(result[1].text, "Crisopa fly")
 
 if __name__ == '__main__':
