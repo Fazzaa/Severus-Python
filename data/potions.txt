@@ -1,3 +1,3 @@
-Pozione Polisucco,mosche Crisopa,sanguisughe,corna di Bicorno,erba fondente,Centinodia,pelle di Girilacco,capello di persona
-Felix Felicis,uovo di Ashwinder,bulbo di Squill,tantacolo di Murtlap,tintura di timo,guscio d'uovo di Occamy,ruta comune in polvere
-Pozione Dilatante,milza di Pipistrello,misurini di ortiche secche,occhi di Pesce Palla 
+Polyjuice potion,Crisopa flies,Leeches,Bicorno horns,Dark Grass,Bindweed,Girilacco skin,hair
+Felix Felicis,Ashwinder egg,Squill bulb,Murtlap's tentacle,Tincture of thyme,Occamy's eggshell,Common rue powder
+Dilating potion,Bat spleen,measuring spoons of dried nettles,Puffer Fish Eyes
