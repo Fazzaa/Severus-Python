@@ -1,5 +1,6 @@
 import random
 import spacy
+from patterns import *
 from spacy.matcher import Matcher
 from spacy.matcher import DependencyMatcher
 
@@ -7,7 +8,10 @@ from spacy.matcher import DependencyMatcher
 # HINT2: SE VERB È PRESENTE -> INGREDIENTE NSUBJ DI VERB
 # HINT3: SE NON È PRESENTE NE VERB NE AUX -> È TUTTO INGREDIENTE
 # HINT4: Lavorare su risposta che ha solo ingredienti (senza verbi)
-    
+
+patterns_name = ["passive_pattern","pattern_verb","pattern_aux"]
+patterns = [passive_pattern, pattern_verb, pattern_aux]
+
 nlp = spacy.load('en_core_web_sm')
         
 def pick_random(phrases_list):
@@ -55,9 +59,9 @@ def get_matched_patterns_from_dependency(name_pattern, pattern, text):
         if match != []:
             match_words = match[1]
             if match_words[0] > match_words[1]: #! A volte vengono restituiti due indici, a volte 3, bisogna capire come restituire le parole in maniera decente
-                matched_elements.append((nlp.vocab[matches[0][0]].text, doc[match_words[2]:match_words[0]][:2]))
+                matched_elements.append(doc[match_words[2]:match_words[0]][:2])
             else:
-                matched_elements.append((nlp.vocab[matches[0][0]].text, doc[match_words[0]:match_words[1]+1][1:]))#? doc[match_words[0] : match_words[1]+1] se non metto il +1 si mangia l'ultima parola ??
+                matched_elements.append(doc[match_words[0]:match_words[1]+1][1:])#? doc[match_words[0] : match_words[1]+1] se non metto il +1 si mangia l'ultima parola ??
     if len(matched_elements) == 0:
         return "No match"
     return matched_elements #*matched element sarà una lista di tuple del tipo: ("nome_pattern", "parte di frase riconosciuta nel patter")
@@ -72,4 +76,14 @@ def find_pattern_name(frame, pattern, text):
         frame.set_student_name(text)
     else:
         name = doc[matches[0][1][0]+1:matches[0][1][1]+1]
-        frame.set_student_name(name)
+        frame.set_student_name(name.text)
+
+def test_patterns(text):
+    i = 0
+    while i < len(patterns):
+        result = get_matched_patterns_from_dependency(patterns_name[i], patterns[i], text)
+        if result != "No match":
+            return result
+        i += 1
+
+print(get_matched_patterns_from_dependency("passive", passive_pattern, "Mosche Crisopa are used in the potion"))
