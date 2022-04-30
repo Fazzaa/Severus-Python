@@ -61,3 +61,15 @@ def get_matched_patterns_from_dependency(name_pattern, pattern, text):
     if len(matched_elements) == 0:
         return "No match"
     return matched_elements #*matched element sarà una lista di tuple del tipo: ("nome_pattern", "parte di frase riconosciuta nel patter")
+
+def find_pattern_name(frame, pattern, text):
+    matcher = DependencyMatcher(nlp.vocab)
+    matcher.add("name_pattern", [pattern])
+    doc = nlp(text)
+    matches = matcher(doc)
+    matches.sort(key = lambda x : x[1])
+    if len(matches)==0:
+        frame.set_student_name(text)
+    else:
+        name = doc[matches[0][1][0]+1:matches[0][1][1]+1]
+        frame.set_student_name(name)
