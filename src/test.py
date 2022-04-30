@@ -19,22 +19,22 @@ class TestDialogueManagerMethods(unittest.TestCase):
     def test_passive_pattern(self):
         answer = "Crisopa fly is used in the potion"
         result = get_matched_patterns_from_dependency("passive_pattern", passive_pattern, answer)[0]
-        self.assertEqual(result[1].text, "Crisopa fly")
+        self.assertEqual(result.text, "Crisopa fly")
 
     def test_pattern_aux(self):
         answer = "the answer is Crisopa Fly..."
         result = get_matched_patterns_from_dependency("pattern_aux", pattern_aux, answer)[0]
-        self.assertEqual(result[1].text, "Crisopa Fly")
+        self.assertEqual(result.text, "Crisopa Fly")
 
     def test_pattern_verb(self):
         answer = "the potion contains Crisopa fly"
         result = get_matched_patterns_from_dependency("pattern_2", pattern_verb, answer)[0]
-        self.assertEqual(result[1].text, "Crisopa fly")
+        self.assertEqual(result.text, "Crisopa fly")
 
     def test_pattern_name(self):
         answer = "my name is Andrea Fancellu"
         result = get_matched_patterns_from_dependency("pattern_name", pattern_name, answer)[0]
-        self.assertEqual(result[1].text, "Andrea Fancellu")
+        self.assertEqual(result.text, "Andrea Fancellu")
         
 
 if __name__ == '__main__':
