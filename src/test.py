@@ -31,5 +31,11 @@ class TestDialogueManagerMethods(unittest.TestCase):
         result = get_matched_patterns_from_dependency("pattern_2", pattern_verb, answer)[0]
         self.assertEqual(result[1].text, "Crisopa fly")
 
+    def test_pattern_name(self):
+        answer = "my name is Andrea Fancellu"
+        result = get_matched_patterns_from_dependency("pattern_name", pattern_name, answer)[0]
+        self.assertEqual(result[1].text, "Andrea Fancellu")
+        
+
 if __name__ == '__main__':
     unittest.main()

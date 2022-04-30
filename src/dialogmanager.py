@@ -58,4 +58,6 @@ def get_matched_patterns_from_dependency(name_pattern, pattern, text):
                 matched_elements.append((nlp.vocab[matches[0][0]].text, doc[match_words[2]:match_words[0]][:2]))
             else:
                 matched_elements.append((nlp.vocab[matches[0][0]].text, doc[match_words[0]:match_words[1]+1][1:]))#? doc[match_words[0] : match_words[1]+1] se non metto il +1 si mangia l'ultima parola ??
+    if len(matched_elements) == 0:
+        return "No match"
     return matched_elements #*matched element sarà una lista di tuple del tipo: ("nome_pattern", "parte di frase riconosciuta nel patter")
