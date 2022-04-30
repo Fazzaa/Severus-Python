@@ -1,3 +1,5 @@
+import random
+
 class Frame:
     
     def __init__(self):
@@ -7,7 +9,7 @@ class Frame:
         self.student_name = ""
         self.student_potion_name = "" #! domanda infame: ti chiedo il nome della pozione dandoti gli ingredienti
         self.add_potions()
-        self.mood = 0 # from 0 to 10 (0 = happy, 10 = angry)
+        self.mood = random.randint(0,2) # from 0 to 2 (0 = happy, 1 = neutral, 2 = angry)
 
     def get_potions_length(self):
         return len(self.potions)
