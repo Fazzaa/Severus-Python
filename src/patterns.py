@@ -4,6 +4,18 @@ pattern = [
 ]
 
 ################DEP PARSER#####################
+#? se non c'è un match con pattern_name prende tutta la stringa come nome utente, si assume che la stringa contiene tutto il nome
+pattern_name = [
+    {"RIGHT_ID": "attr",
+    "RIGHT_ATTRS": {"LEMMA": {"IN": ["be"]}}
+    },
+    {"LEFT_ID": "attr",
+    "REL_OP": ">",
+    "RIGHT_ID": "name",
+    "RIGHT_ATTRS": {"DEP": "attr"}
+    }
+]
+
 pattern_aux = [
     {"RIGHT_ID": "attr",
     "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["be", "use", "need", "have"]}}
