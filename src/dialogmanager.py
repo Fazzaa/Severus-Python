@@ -83,7 +83,7 @@ def test_patterns(text):
     while i < len(patterns):
         result = get_matched_patterns_from_dependency(patterns_name[i], patterns[i], text)
         if result != "No match":
-            return result
+            return result[0].text
         i += 1
-
+    return "No match"
 print(get_matched_patterns_from_dependency("passive", passive_pattern, "Mosche Crisopa are used in the potion"))
