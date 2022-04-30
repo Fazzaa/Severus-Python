@@ -5,7 +5,6 @@ from constants import *
 from frame import Frame
 
 
-frame = Frame()
 lexicon = nlg.Lexicon.getDefaultLexicon()
 nlg_factory = nlg.NLGFactory(lexicon)
 realiser = nlg.Realiser(lexicon) 
@@ -55,13 +54,13 @@ def start_interview(frame):
 
 
 # frase del tipo: "Which ingredients are in Polyjuice potion ingredient's list?"
-def ask_ingredients_be(potion):
+def ask_ingredients_be(frame):
     verb = nlg_factory.createVerbPhrase("be")
     verb.addPreModifier("Which")
     subject = nlg_factory.createNounPhrase("ingredient")
     subject.setPlural(True)
     object = nlg_factory.createNounPhrase("list")
-    object.addPreModifier("in " + f"{potion}" +  " ingredient's")
+    object.addPreModifier("in " + f"{frame.get_potion_name()}" +  " ingredient's")
     sentence = nlg_factory.createClause(subject, verb, object)
     sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.YES_NO)
     output = realiser.realiseSentence(sentence)
@@ -126,5 +125,3 @@ print(ask_ingredient_between("Polyjuice potion", "Crisopa Fly", "Murtlap's tenta
 print(ask_not_contain("Polyjuice potion"))
 print(greetings())
 '''
-
-print(start_interview(frame))
