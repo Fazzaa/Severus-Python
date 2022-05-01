@@ -3,6 +3,7 @@ import spacy
 from patterns import *
 from spacy.matcher import Matcher
 from spacy.matcher import DependencyMatcher
+from difflib import SequenceMatcher
 
 # HINT1: SE AUX È PRESENTE -> INGREDIENTE È COPULA DI AUX
 # HINT2: SE VERB È PRESENTE -> INGREDIENTE NSUBJ DI VERB
@@ -87,3 +88,6 @@ def test_patterns(text):
 
 #print(get_matched_patterns_from_dependency("passive_pattern_common", passive_pattern_common, "Murtlap's tentacle is used in the potion"))
 #print(get_matched_patterns_from_dependency("passive_pattern", passive_pattern, "Murtlap's tentacle is used in the potion"))
+
+def similar(a, b):
+    return SequenceMatcher(None, a, b).ratio()
