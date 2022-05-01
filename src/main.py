@@ -17,7 +17,7 @@ while (len(f.get_student_ingredients()) < f.get_ingredients_number()) and f.get_
     result = test_patterns(answer)
     if result != None:
         if f.check_response(result):
-            if full_frame():
+            if f.full_frame():
                 good_response()
         else:
             bad_response()
