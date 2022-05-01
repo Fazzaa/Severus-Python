@@ -9,8 +9,8 @@ from spacy.matcher import DependencyMatcher
 # HINT3: SE NON È PRESENTE NE VERB NE AUX -> È TUTTO INGREDIENTE
 # HINT4: Lavorare su risposta che ha solo ingredienti (senza verbi)
 
-patterns_name = ["passive_pattern","pattern_verb","pattern_aux"]
-patterns = [passive_pattern, pattern_verb, pattern_aux]
+patterns_name = ["passive_pattern_common","passive_pattern_propn", "pattern_verb","pattern_aux"]
+patterns = [passive_pattern_common, passive_pattern_propn, pattern_verb, pattern_aux]
 
 nlp = spacy.load('en_core_web_sm')
         
@@ -54,17 +54,16 @@ def get_matched_patterns_from_dependency(name_pattern, pattern, text):
     doc = nlp(text)
     matches = matcher(doc)
     matches.sort(key = lambda x : x[1])
-    #! Davvero scritta male, secondo me si può fare di meglio qui
     for match in matches:
         if match != []:
-            match_words = match[1]
-            if match_words[0] > match_words[1]: #! A volte vengono restituiti due indici, a volte 3, bisogna capire come restituire le parole in maniera decente
-                matched_elements.append(doc[match_words[2]:match_words[0]][:2])
-            else:
-                matched_elements.append(doc[match_words[0]:match_words[1]+1][1:])#? doc[match_words[0] : match_words[1]+1] se non metto il +1 si mangia l'ultima parola ??
+            match_words = sorted(match[1])
+            if name_pattern == "passive_pattern_propn" or name_pattern == "passive_pattern_common":
+                matched_elements.append(doc[match_words[0]:match_words[len(match_words)-1]][:-1])
+            elif name_pattern == "pattern_verb" or name_pattern == "pattern_aux":
+                matched_elements.append(doc[match_words[0]+1:match_words[len(match_words)-1]+1])
     if len(matched_elements) == 0:
-        return "No match"
-    return matched_elements #*matched element sarà una lista di tuple del tipo: ("nome_pattern", "parte di frase riconosciuta nel patter")
+        return ["No Match"]
+    return matched_elements[0].text
 
 def find_pattern_name(frame, pattern, text):
     matcher = DependencyMatcher(nlp.vocab)
@@ -82,8 +81,9 @@ def test_patterns(text):
     i = 0
     while i < len(patterns):
         result = get_matched_patterns_from_dependency(patterns_name[i], patterns[i], text)
-        if result != "No match":
+        if result[0] != "No Match":
             return result
         i += 1
 
-print(get_matched_patterns_from_dependency("passive", passive_pattern, "Mosche Crisopa are used in the potion"))
+print(get_matched_patterns_from_dependency("passive_pattern_common", passive_pattern_common, "Murtlap's tentacle is used in the potion"))
+#print(get_matched_patterns_from_dependency("passive_pattern", passive_pattern, "Murtlap's tentacle is used in the potion"))
