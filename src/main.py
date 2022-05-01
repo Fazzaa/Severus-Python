@@ -12,9 +12,10 @@ print(f.get_mood())
 print(f.get_chances())
 
 
-while (len(f.get_student_ingredients()) < f.get_ingredients_number()) or f.get_chances() > 0:
+while (len(f.get_student_ingredients()) < f.get_ingredients_number()) and f.get_chances() > 0:
     answer = input(ask_ingredients_be(f))
-    if f.check_response(test_patterns(answer)[0].text):
+    result = test_patterns(answer)
+    if f.check_response(result):
         print("Buono")
     else:
         print("Male")
