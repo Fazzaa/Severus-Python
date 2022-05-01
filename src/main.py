@@ -1,7 +1,7 @@
 from frame import Frame
 from dialogmanager import *
 from patterns import *
-from qna import ask_ingredients_be, greetings, start_interview
+from qna import *
 
 f = Frame()
 
@@ -15,13 +15,16 @@ print(f.get_chances())
 while (len(f.get_student_ingredients()) < f.get_ingredients_number()) and f.get_chances() > 0:
     answer = input(ask_ingredients_be(f))
     result = test_patterns(answer)
-    if f.check_response(result):
-        print("Buono")
+    if result != None:
+        if f.check_response(result):
+            if full_frame():
+                good_response()
+        else:
+            bad_response()
+            f.dec_chances()
     else:
-        print("Male")
-        f.dec_chances()
-        print(test_patterns(answer))
-    
+        print("I don't understand you!")
+        
 if f.get_chances() == 0:
     print("Figlio di puttana studia")
 else:
