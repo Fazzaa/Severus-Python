@@ -113,15 +113,41 @@ def ask_not_contain(potion):
     output = realiser.realiseSentence(sentence)
     return output
 
+def bad_response(frame, ingredient):
+    if ingredient == "No Match":
+        if frame.get_mood() == 2:    
+            verb = nlg_factory.createVerbPhrase("waste")
+            dobj = nlg_factory.createNounPhrase("time")
+            dobj.addPreModifier("my")
+            verb.setNegated(True)
+            verb.setFeature(nlg.Feature.PERSON, nlg.Person.SECOND)
+            sentence = nlg_factory.createClause(verb, dobj)
+        elif frame.get_mood() == 1:
+            subj = nlg_factory.createNounPhrase("You")
+            verb = nlg_factory.createVerbPhrase("do")
+            verb.addPreModifier("can")
+            verb.addPostModifier("better")
+            sentence = nlg_factory.createClause(subj, verb)
+        else:
+            sentence = nlg_factory.createClause()
+            sentence.setSubject("You")
+            sentence.setVerb("do")
+            sentence.addComplement("better")
+    else:
+        if frame.get_mood() == 2:
+            # Don't waste my time 
+            pass
+        elif frame.get_mood() == 1:
+            # You can do better than this
+            pass
+        else:
+            pass
+            # Keep calm, just breath and try to answer to the question.
+    output = realiser.realiseSentence(sentence)
+    return output
 
+def good_response():
+    pass
 
-
-# Test
-'''
-print(ask_ingredients_be("Polyjuice potion"))
-print(ask_ingredient_contain("Polyjuice potion"))
-print(ask_ingredient_contain_else("Polyjuice potion"))
-print(ask_ingredient_between("Polyjuice potion", "Crisopa Fly", "Murtlap's tentacle"))
-print(ask_not_contain("Polyjuice potion"))
-print(greetings())
-'''
+f = Frame()
+print(bad_response(f, "No Match"))
