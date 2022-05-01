@@ -1,13 +1,15 @@
 import speech_recognition as sr
 
 def speech_recognition():
+    result = ""
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
-        print("Say something!")
+        print("...\n")
         audio_text = recognizer.listen(source)
         try:
-            print("Text: "+recognizer.recognize_google(audio_text))
+            result = recognizer.recognize_google(audio_text)
+            print(result)
         except:
-            print("Sorry, I did not get that")
-
-speech_recognition()
+            print("\n")
+    return result
+#speech_recognition()
