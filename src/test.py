@@ -11,30 +11,41 @@ class TestFrameMethods(unittest.TestCase):
 
     def test_check_response(self):
         f = Frame()
-        f.set_potion_name("Pozione Polisucco")
-        self.assertTrue(f.check_response("mosche crisopa"))
+        f.set_potion_name("Polyjuice potion")
+        self.assertTrue(f.check_response("Crisopa flies"))
 
 class TestDialogueManagerMethods(unittest.TestCase):
 
-    def test_passive_pattern(self):
-        answer = "Crisopa fly is used in the potion"
-        result = get_matched_patterns_from_dependency("passive_pattern", passive_pattern, answer)[0]
-        self.assertEqual(result.text, "Crisopa fly")
+    def test_passive_pattern_common(self):
+        answer = "puffer fish eyes is used in the potion"
+        result = get_matched_patterns_from_dependency("passive_pattern_common", passive_pattern_common, answer)
+        self.assertEqual(result, "puffer fish eyes")
+
+    def test_passive_pattern_propn(self):
+        answer = "Puffer Fish Eyes is used in the potion"
+        result = get_matched_patterns_from_dependency("passive_pattern_propn", passive_pattern_propn, answer)
+        self.assertEqual(result, "Puffer Fish Eyes")
+
+    def test_passive_pattern_common_2(self):
+        answer = "Murtlap's tentacle is used in the potion"
+        result = get_matched_patterns_from_dependency("passive_pattern_common", passive_pattern_common, answer)
+        self.assertEqual(result, "Murtlap's tentacle")
 
     def test_pattern_aux(self):
-        answer = "the answer is Crisopa Fly..."
-        result = get_matched_patterns_from_dependency("pattern_aux", pattern_aux, answer)[0]
-        self.assertEqual(result.text, "Crisopa Fly")
+        answer = "the answer is Crisopa Flies..."
+        result = get_matched_patterns_from_dependency("pattern_aux", pattern_aux, answer)
+        self.assertEqual(result, "Crisopa Flies")
 
     def test_pattern_verb(self):
-        answer = "the potion contains Crisopa fly"
-        result = get_matched_patterns_from_dependency("pattern_2", pattern_verb, answer)[0]
-        self.assertEqual(result.text, "Crisopa fly")
+        answer = "the potion contains Crisopa flies"
+        result = get_matched_patterns_from_dependency("pattern_verb", pattern_verb, answer)
+        self.assertEqual(result, "Crisopa flies")
 
     def test_pattern_name(self):
+        f = Frame()
         answer = "my name is Andrea Fancellu"
-        result = get_matched_patterns_from_dependency("pattern_name", pattern_name, answer)[0]
-        self.assertEqual(result.text, "Andrea Fancellu")
+        find_pattern_name(f, pattern_name, answer)
+        self.assertEqual(f.get_student_name(), "Andrea Fancellu")
         
 
 if __name__ == '__main__':
