@@ -86,8 +86,5 @@ def test_patterns(text):
             return result
         i += 1
 
-#print(get_matched_patterns_from_dependency("passive_pattern_common", passive_pattern_common, "Murtlap's tentacle is used in the potion"))
-#print(get_matched_patterns_from_dependency("passive_pattern", passive_pattern, "Murtlap's tentacle is used in the potion"))
-
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
