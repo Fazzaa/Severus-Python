@@ -29,3 +29,5 @@ if f.get_chances() == 0:
     print("Figlio di puttana studia")
 else:
     print("Sei l'orgoglio di Mazzei")
+
+print(similar("Crisopa Flies","Crisopa Fly"))
