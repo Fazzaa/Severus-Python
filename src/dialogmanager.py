@@ -55,6 +55,7 @@ def test_patterns(text):
         if result[0] != "No Match":
             return result
         i += 1
+    text = text.split(',')    
     return text
 
 def similar(a, b):
