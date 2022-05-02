@@ -1,10 +1,3 @@
-pattern = [
-    {"DEP" : "ROOT"},
-    {"IS_ALPHA" : True, "OP": "+"}
-]
-
-################DEP PARSER#####################
-#? se non c'è un match con pattern_name prende tutta la stringa come nome utente, si assume che la stringa contiene tutto il nome
 pattern_name = [
     {"RIGHT_ID": "attr",
     "RIGHT_ATTRS": {"LEMMA": {"IN": ["be"]}}
@@ -32,7 +25,6 @@ pattern_aux = [
     }
 ]
 
-#? Abbozzato, funziona per la frase con contains, ma probabilmente si può generalizzare
 pattern_verb = [
     {"RIGHT_ID": "contains",
     "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["contain"]}}
@@ -66,8 +58,6 @@ pattern_verb_2 = [
     }
 ]
     
-
-#? Sembra funzionante su passivo
 passive_pattern_common = [
     {"RIGHT_ID": "passive",
     "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["use", "need"]}}

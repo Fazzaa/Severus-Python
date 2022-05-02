@@ -165,7 +165,7 @@ def good_response(frame, ingredient):
     if frame.get_mood() == 2:    
         return "decent"
     elif frame.get_mood() == 1:
-        return f"ok, {ingredient} it is correct"
+        return f"ok, {ingredient} is correct"
     else:
         return "great!"
 

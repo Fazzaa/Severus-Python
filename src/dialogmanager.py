@@ -12,37 +12,12 @@ patterns = [passive_pattern_common, passive_pattern_propn, pattern_verb, pattern
 nlp = spacy.load('en_core_web_sm')
         
 def pick_random(phrases_list):
-    """Return a random element from a list."""
     return random.choice(phrases_list)
 
-#* Alternativa con matcher per riconoscere il pattern:
-#* matcher spacy http://spacy.pythonhumanities.com/02_02_matcher.html#
-#* si utlizza la stessa funzione per riconoscere i vari pattern, si possono così
-#* creare più pattern da usare a seconda della parola senza dover fare 50 funzioni
-
-def get_matched_patterns(name_pattern, pattern, text):
-    """Find the pattern in the text and return the matched elements"""
-    matched_elements = [] 
-    matcher = Matcher(nlp.vocab)
-    matcher.add(name_pattern, [pattern], greedy="LONGEST")
-    doc = nlp(text)
-    matches = matcher(doc)
-    matches.sort(key = lambda x : x[1])
-    matched_elements = [(nlp.vocab[matches[0][0]].text, doc[match[1]:match[2]][1:]) for match in matches] 
-    #[1:] perchè il primo elemento è l'ausiliare che non voglio nella lista
-    # stampati matches e vedrai che queste oeprazioni avranno senso
-    return matched_elements
-    
-
-#TODO: frame nella funzione check_response così il match è più facile e si ottengono informazioni belle
-    
-
-#* Alternativa con dependency matcher per riconoscere il pattern
 # TODO: riuscire a passare in input una lista di patter (?) e magari una lista di nomi di pattern associati 
 # TODO: (in modo da riuscire a capire quale pattern ha fatto match e avere il nome del pattern)
 
 def get_matched_patterns_from_dependency(name_pattern, pattern, text):
-    '''Recognizes the pattern passed as a parameter within a text using the spacy dependency matcher'''
     matched_elements = [] 
     matcher = DependencyMatcher(nlp.vocab)
     matcher.add(name_pattern, [pattern])
