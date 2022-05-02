@@ -6,8 +6,8 @@ from spacy.matcher import DependencyMatcher
 from difflib import SequenceMatcher
 
 
-patterns_name = ["passive_pattern_common","passive_pattern_propn", "pattern_verb","pattern_aux"]
-patterns = [passive_pattern_common, passive_pattern_propn, pattern_verb, pattern_aux]
+patterns_name = ["passive_pattern_common","passive_pattern_propn", "pattern_verb","pattern_aux", "pattern_verb_2"]
+patterns = [passive_pattern_common, passive_pattern_propn, pattern_verb, pattern_aux, pattern_verb_2]
 
 nlp = spacy.load('en_core_web_sm')
         
@@ -51,9 +51,10 @@ def get_matched_patterns_from_dependency(name_pattern, pattern, text):
     matches.sort(key = lambda x : x[1])
     for match in matches:
         match_words = sorted(match[1])
+        print(match_words)
         if name_pattern == "passive_pattern_propn" or name_pattern == "passive_pattern_common":
             matched_elements.append(doc[match_words[0]:match_words[len(match_words)-1]][:-1])
-        elif name_pattern == "pattern_verb" or name_pattern == "pattern_aux":
+        elif name_pattern == "pattern_verb" or name_pattern == "pattern_aux" or name_pattern == "pattern_verb_2":
             matched_elements.append(doc[match_words[0]+1:match_words[len(match_words)-1]+1])
 
     if len(matched_elements) == 0:
@@ -83,3 +84,18 @@ def test_patterns(text):
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
+
+def get_vote(frame):
+    good_answer = round((len(frame.get_student_ingredients()) / frame.get_ingredients_number())*30, 0)
+    print(good_answer)
+    if frame.full_frame():
+        if frame.get_chances() < frame.get_initial_chances():
+            return good_answer - frame.get_mood()
+    else:
+        if frame.get_mood() == 0 and good_answer >= 16:
+            return 18
+    
+    return good_answer
+
+
+    
