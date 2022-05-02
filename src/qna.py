@@ -10,13 +10,6 @@ lexicon = nlg.Lexicon.getDefaultLexicon()
 nlg_factory = nlg.NLGFactory(lexicon)
 realiser = nlg.Realiser(lexicon) 
 
-#! dubbio esistenziale, tutta sta libreria mi sembra inutile, si assemblano le frasi logicamente ma alla fine è come se le avessi scritte a mano
-#! chiedere a Mazzei come va usata per email, per avere meno paranoie.
-#! cosa cambia tra queste generate con questo bel criterio logico e quelle scritte banalmente tipo 
-#! "Which ingredients contains f{potion}?" ??? 
-
-
-
 # L'idea è che il dialogue manager scelga quali di queste funzioni usare 
 # a seconda delle risposte dell'utente
 
@@ -169,6 +162,15 @@ def bad_response(frame, ingredient):
     output = realiser.realiseSentence(sentence)
     return output
 
-def good_response():
-    pass
+def good_response(frame, ingredient):
+    if frame.get_mood() == 2:    
+        return "decent"
+    elif frame.get_mood() == 1:
+        return f"ok, {ingredient} it is correct"
+    else:
+        return "great!"
 
+#due possibilità:
+#1. un metodo solo per il voto dove controllo se sono finiti i tentativi e 
+#   in base a quello restituisco messaggio con annessa valutazione
+#2. due metodi, uno per il voto positivo un per il voto negativo e lasciamo il controllo (se ha finito o meno i tentativi) nel main

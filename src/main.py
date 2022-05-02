@@ -14,12 +14,12 @@ if speech == "0":
     print(start_interview(f))
     print(f"You have {f.get_chances()}")
     
-    while (len(f.get_student_ingredients()) < f.get_ingredients_number()) and f.get_chances() > 0:
+    while not f.full_frame() and f.get_chances() > 0:
         answer = input(ask_ingredients(f))
         result = test_patterns(answer)
         
         if f.check_response(result):
-            print("Buono")
+            print(good_response(f, result))
         else:
             print(bad_response(f, result))
             f.dec_chances()
