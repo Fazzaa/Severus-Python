@@ -1,5 +1,4 @@
 # Piton question and answer
-from re import sub
 import simplenlg as nlg
 from dialogmanager import *
 from constants import *

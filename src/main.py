@@ -12,7 +12,7 @@ if speech == "0":
     name = input(greetings())
     find_pattern_name(f, pattern_name, name)
     print(start_interview(f))
-    print(f"You have {f.get_chances()}")
+    print(f"You have {f.get_chances()} chances")
     
     while not f.full_frame() and f.get_chances() > 0:
         answer = input(ask_ingredients(f))

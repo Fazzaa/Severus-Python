@@ -82,6 +82,6 @@ class Frame:
             return False
     
     def full_frame(self):
-        return self.get_ingredients_number <= self.get_student_ingredients()
+        return self.get_ingredients_number() <= len(self.get_student_ingredients())
 
 
