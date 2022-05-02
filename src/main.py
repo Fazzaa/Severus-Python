@@ -23,11 +23,9 @@ if speech == "0":
         else:
             print(bad_response(f, result))
             f.dec_chances()
-        
-    if f.get_chances() == 0:
-        print("Figlio di puttana studia")
-    else:
-        print("Sei l'orgoglio di Mazzei")
+    
+    vote = get_vote(f)
+    print(valutation(f, vote))
 
 #? SPEECH RECOGNITION ON
 else:
