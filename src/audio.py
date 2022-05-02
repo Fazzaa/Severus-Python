@@ -1,4 +1,7 @@
 import speech_recognition as sr
+import gtts
+from playsound import playsound
+
 
 def speech_recognition():
     result = ""
@@ -12,4 +15,8 @@ def speech_recognition():
         except:
             print("\n")
     return result
-#speech_recognition()
+
+def text_to_speech(text):
+    tts = gtts.gTTS(text, lang="it")
+    tts.save("audio.mp3")
+    playsound("audio.mp3")
