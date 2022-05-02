@@ -12,21 +12,16 @@ if speech == "0":
     name = input(greetings())
     find_pattern_name(f, pattern_name, name)
     print(start_interview(f))
-    print(f.get_mood())
-    print(f.get_chances())
+    print(f"You have {f.get_chances()}")
     
-    while (len(f.get_student_ingredients()) < f.get_ingredients_number()) and f.get_chances() > 0:
-        answer = input(ask_ingredients_be(f))
+    while not f.full_frame() and f.get_chances() > 0:
+        answer = input(ask_ingredients(f))
         result = test_patterns(answer)
-        if result != None:
-            if f.check_response(result):
-                print("Buono")
-            else:
-                bad_response()
-                f.dec_chances()
-                print(test_patterns(answer))
+        
+        if f.check_response(result):
+            print(good_response(f, result))
         else:
-            print("I don't understand you")
+            print(bad_response(f, result))
             f.dec_chances()
         
     if f.get_chances() == 0:
@@ -44,19 +39,16 @@ else:
     print(f.get_chances())
 
     while (len(f.get_student_ingredients()) < f.get_ingredients_number()) and f.get_chances() > 0:
-        print(ask_ingredients_be(f))
+        print(ask_ingredients(f))
         answer = speech_recognition()
         result = test_patterns(answer)
-        if result != None:
-            if f.check_response(result):
-                print("Buono")
-            else:
-                bad_response()
-                f.dec_chances()
-                print(test_patterns(answer))
+        
+        if f.check_response(result):
+            print("Buono")
         else:
-            print("I don't understand you!")
+            print(bad_response())
             f.dec_chances()
+            print(test_patterns(answer))
         
     if f.get_chances() == 0:
         print("Figlio di puttana studia")

@@ -1,4 +1,5 @@
 # Piton question and answer
+from re import sub
 import simplenlg as nlg
 from dialogmanager import *
 from constants import *
@@ -8,16 +9,6 @@ from frame import Frame
 lexicon = nlg.Lexicon.getDefaultLexicon()
 nlg_factory = nlg.NLGFactory(lexicon)
 realiser = nlg.Realiser(lexicon) 
-
-#! dubbio esistenziale, tutta sta libreria mi sembra inutile, si assemblano le frasi logicamente ma alla fine è come se le avessi scritte a mano
-#! chiedere a Mazzei come va usata per email, per avere meno paranoie.
-#! cosa cambia tra queste generate con questo bel criterio logico e quelle scritte banalmente tipo 
-#! "Which ingredients contains f{potion}?" ??? 
-
-
-
-#* idea per rendere il tutto meno statico, aggiungere funzioni random che cambiano le comppnenti delle frasi
-#* tipo una lista di verbi tra cui scegliere al posto di "contains" ecc...
 
 # L'idea è che il dialogue manager scelga quali di queste funzioni usare 
 # a seconda delle risposte dell'utente
@@ -37,7 +28,6 @@ def greetings():
     output = f"{output} {realiser.realiseSentence(sentence2)}"
     return output
 
-
 def start_interview(frame):
     s1 = nlg_factory.createSentence(f"Well Mr. {frame.get_student_name()}")
 
@@ -52,9 +42,21 @@ def start_interview(frame):
     output = f"{output} {realiser.realiseSentence(s2)}"
     return output
 
+def ask_ingredients(f):
+    if f.get_mood() == 0:
+        return ask_ingredient_contain_0(f)
+    elif f.get_mood() == 1:
+        return ask_ingredients_be_0(f)
+    elif f.get_mood() == 2:
+        return ask_ingredient_contain_0(f)
+    else:
+        pass
+        #potter_mode()
+        
+#######QUESTIONS########
 
 # frase del tipo: "Which ingredients are in Polyjuice potion ingredient's list?"
-def ask_ingredients_be(frame):
+def ask_ingredients_be_0(frame):
     verb = nlg_factory.createVerbPhrase("be")
     verb.addPreModifier("Which")
     subject = nlg_factory.createNounPhrase("ingredient")
@@ -67,10 +69,10 @@ def ask_ingredients_be(frame):
     return output
 
 # frase del tipo: "What does Polyjuice potion contain?"
-def ask_ingredient_contain(potion):
+def ask_ingredient_contain_0(frame):
     verb = nlg_factory.createVerbPhrase("contain")
     verb.setFeature(nlg.Feature.PERSON, nlg.Person.THIRD)
-    subject = nlg_factory.createNounPhrase(f"{potion}")
+    subject = nlg_factory.createNounPhrase(f"{frame.get_potion_name()}")
     sentence = nlg_factory.createClause(subject, verb)
     sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
     output = realiser.realiseSentence(sentence)
@@ -113,41 +115,62 @@ def ask_not_contain(potion):
     output = realiser.realiseSentence(sentence)
     return output
 
+########ANSWERS########
+
 def bad_response(frame, ingredient):
     if ingredient == "No Match":
         if frame.get_mood() == 2:    
+            subj = nlg_factory.createNounPhrase("you")
+            verb = nlg_factory.createVerbPhrase("want")
+            verb.addPostModifier(f"me as an enemy, {frame.get_student_name()}")
+            sentence = nlg_factory.createClause(subj, verb)
+            sentence.setNegated(True)
+        elif frame.get_mood() == 1:
             verb = nlg_factory.createVerbPhrase("waste")
             dobj = nlg_factory.createNounPhrase("time")
             dobj.addPreModifier("my")
             verb.setNegated(True)
             verb.setFeature(nlg.Feature.PERSON, nlg.Person.SECOND)
             sentence = nlg_factory.createClause(verb, dobj)
-        elif frame.get_mood() == 1:
-            subj = nlg_factory.createNounPhrase("You")
-            verb = nlg_factory.createVerbPhrase("do")
-            verb.addPreModifier("can")
-            verb.addPostModifier("better")
-            sentence = nlg_factory.createClause(subj, verb)
         else:
-            sentence = nlg_factory.createClause()
-            sentence.setSubject("You")
-            sentence.setVerb("do")
-            sentence.addComplement("better")
+            verb =  nlg_factory.createVerbPhrase("try")
+            verb.setFeature(nlg.Feature.PERSON, nlg.Person.SECOND)
+            verb.addPostModifier("again")
+            sentence = nlg_factory.createClause(verb)
     else:
         if frame.get_mood() == 2:
-            # Don't waste my time 
-            pass
+            subj = nlg_factory.createNounPhrase("you")
+            verb = nlg_factory.createVerbPhrase("be")   
+            obj = nlg_factory.createNounPhrase("stupid")
+            obj.addPreModifier("so")   
+            sentence = nlg_factory.createClause(subj, verb, obj)
+            sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.HOW)
         elif frame.get_mood() == 1:
-            # You can do better than this
-            pass
+            verb = nlg_factory.createVerbPhrase("be")
+            subj = nlg_factory.createNounPhrase("That")
+            obj = nlg_factory.createNounPhrase("wrong")
+            obj.addPreModifier("totally")
+            sentence = nlg_factory.createClause(subj, verb, obj)
         else:
-            pass
-            # Keep calm, just breath and try to answer to the question.
+            verb = nlg_factory.createVerbPhrase("be")
+            subj = nlg_factory.createNounPhrase("That")
+            obj = nlg_factory.createNounPhrase("ingredient")
+            obj.addPreModifier("the correct")
+            sentence = nlg_factory.createClause(subj, verb, obj)
+            sentence.setNegated(True)
+
     output = realiser.realiseSentence(sentence)
     return output
 
-def good_response():
-    pass
+def good_response(frame, ingredient):
+    if frame.get_mood() == 2:    
+        return "decent"
+    elif frame.get_mood() == 1:
+        return f"ok, {ingredient} it is correct"
+    else:
+        return "great!"
 
-#f = Frame()
-#print(bad_response(f, "No Match"))
+#due possibilità:
+#1. un metodo solo per il voto dove controllo se sono finiti i tentativi e 
+#   in base a quello restituisco messaggio con annessa valutazione
+#2. due metodi, uno per il voto positivo un per il voto negativo e lasciamo il controllo (se ha finito o meno i tentativi) nel main
