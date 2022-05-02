@@ -169,7 +169,24 @@ def good_response(frame, ingredient):
     else:
         return "great!"
 
-#due possibilità:
-#1. un metodo solo per il voto dove controllo se sono finiti i tentativi e 
-#   in base a quello restituisco messaggio con annessa valutazione
-#2. due metodi, uno per il voto positivo un per il voto negativo e lasciamo il controllo (se ha finito o meno i tentativi) nel main
+
+def valutation(frame, vote):
+    verb = nlg_factory.createVerbPhrase("go")
+    verb.setFeature(nlg.Feature.TENSE, nlg.Tense.PAST)
+    subj = nlg_factory.createNounPhrase("interview")
+    subj.addPreModifier(f"Well {frame.get_student_name()},")
+    subj.addPreModifier("the")
+    if vote < 18:
+        obj = nlg_factory.createNounPhrase("bad")
+        if vote == 0:
+            obj.addPreModifier("very")
+    elif vote >= 18 and vote <= 25:
+        obj = nlg_factory.createNounPhrase("well")
+    else:
+        obj = nlg_factory.createNounPhrase("well")
+        obj.addPreModifier("very")
+    sentence_1 = nlg_factory.createClause(subj, verb, obj)
+    output = realiser.realiseSentence(sentence_1)
+    return output
+
+
