@@ -5,10 +5,6 @@ from spacy.matcher import Matcher
 from spacy.matcher import DependencyMatcher
 from difflib import SequenceMatcher
 
-# HINT1: SE AUX È PRESENTE -> INGREDIENTE È COPULA DI AUX
-# HINT2: SE VERB È PRESENTE -> INGREDIENTE NSUBJ DI VERB
-# HINT3: SE NON È PRESENTE NE VERB NE AUX -> È TUTTO INGREDIENTE
-# HINT4: Lavorare su risposta che ha solo ingredienti (senza verbi)
 
 patterns_name = ["passive_pattern_common","passive_pattern_propn", "pattern_verb","pattern_aux"]
 patterns = [passive_pattern_common, passive_pattern_propn, pattern_verb, pattern_aux]
@@ -38,12 +34,10 @@ def get_matched_patterns(name_pattern, pattern, text):
     return matched_elements
     
 
-#TODO: implementare modo per togliere l'articolo dalla frase matchata, si può fare direttamente nel 
 #TODO: frame nella funzione check_response così il match è più facile e si ottengono informazioni belle
     
 
 #* Alternativa con dependency matcher per riconoscere il pattern
-# TODO: DISCLAIMER: i nomi dei pattern e dei vari attributi sono opinabili, lo so. Sentitevi liberi di cambiarli.
 # TODO: riuscire a passare in input una lista di patter (?) e magari una lista di nomi di pattern associati 
 # TODO: (in modo da riuscire a capire quale pattern ha fatto match e avere il nome del pattern)
 
@@ -56,12 +50,12 @@ def get_matched_patterns_from_dependency(name_pattern, pattern, text):
     matches = matcher(doc)
     matches.sort(key = lambda x : x[1])
     for match in matches:
-        if match != []:
-            match_words = sorted(match[1])
-            if name_pattern == "passive_pattern_propn" or name_pattern == "passive_pattern_common":
-                matched_elements.append(doc[match_words[0]:match_words[len(match_words)-1]][:-1])
-            elif name_pattern == "pattern_verb" or name_pattern == "pattern_aux":
-                matched_elements.append(doc[match_words[0]+1:match_words[len(match_words)-1]+1])
+        match_words = sorted(match[1])
+        if name_pattern == "passive_pattern_propn" or name_pattern == "passive_pattern_common":
+            matched_elements.append(doc[match_words[0]:match_words[len(match_words)-1]][:-1])
+        elif name_pattern == "pattern_verb" or name_pattern == "pattern_aux":
+            matched_elements.append(doc[match_words[0]+1:match_words[len(match_words)-1]+1])
+
     if len(matched_elements) == 0:
         return ["No Match"]
     return matched_elements[0].text
@@ -85,6 +79,7 @@ def test_patterns(text):
         if result[0] != "No Match":
             return result
         i += 1
+    return "No Match"
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
