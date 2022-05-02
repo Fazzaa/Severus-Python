@@ -55,7 +55,7 @@ def test_patterns(text):
         if result[0] != "No Match":
             return result
         i += 1
-    return "No Match"
+    return text
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
