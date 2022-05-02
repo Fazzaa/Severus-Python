@@ -122,14 +122,22 @@ def ask_not_contain(potion):
 ########ANSWERS########
 
 def bad_response(frame, ingredient):
-    if ingredient == "No Match":
-        if frame.get_mood() == 2:    
-            subj = nlg_factory.createNounPhrase("you")
+    n = pick_random([1,2])
+    if frame.get_mood() == 2:
+        subj = nlg_factory.createNounPhrase("you")
+        if n == 1:
             verb = nlg_factory.createVerbPhrase("want")
             verb.addPostModifier(f"me as an enemy, {frame.get_student_name()}")
             sentence = nlg_factory.createClause(subj, verb)
             sentence.setNegated(True)
-        elif frame.get_mood() == 1:
+        else:
+            verb = nlg_factory.createVerbPhrase("be")   
+            obj = nlg_factory.createNounPhrase("stupid")
+            obj.addPreModifier("so")   
+            sentence = nlg_factory.createClause(subj, verb, obj)
+            sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.HOW)
+    elif frame.get_mood() == 1:
+        if n == 1:
             verb = nlg_factory.createVerbPhrase("waste")
             dobj = nlg_factory.createNounPhrase("time")
             dobj.addPreModifier("my")
@@ -137,32 +145,25 @@ def bad_response(frame, ingredient):
             verb.setFeature(nlg.Feature.PERSON, nlg.Person.SECOND)
             sentence = nlg_factory.createClause(verb, dobj)
         else:
+            subj = nlg_factory.createNounPhrase("That")
+            verb = nlg_factory.createVerbPhrase("be")
+            obj = nlg_factory.createNounPhrase("wrong")
+            obj.addPreModifier("totally")
+            sentence = nlg_factory.createClause(subj, verb, obj)
+    else:
+        if n == 1:
             verb =  nlg_factory.createVerbPhrase("try")
             verb.setFeature(nlg.Feature.PERSON, nlg.Person.SECOND)
             verb.addPostModifier("again")
             sentence = nlg_factory.createClause(verb)
-    else:
-        if frame.get_mood() == 2:
-            subj = nlg_factory.createNounPhrase("you")
-            verb = nlg_factory.createVerbPhrase("be")   
-            obj = nlg_factory.createNounPhrase("stupid")
-            obj.addPreModifier("so")   
-            sentence = nlg_factory.createClause(subj, verb, obj)
-            sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.HOW)
-        elif frame.get_mood() == 1:
-            verb = nlg_factory.createVerbPhrase("be")
-            subj = nlg_factory.createNounPhrase("That")
-            obj = nlg_factory.createNounPhrase("wrong")
-            obj.addPreModifier("totally")
-            sentence = nlg_factory.createClause(subj, verb, obj)
-        else:
+        else: 
             verb = nlg_factory.createVerbPhrase("be")
             subj = nlg_factory.createNounPhrase("That")
             obj = nlg_factory.createNounPhrase("ingredient")
             obj.addPreModifier("the correct")
             sentence = nlg_factory.createClause(subj, verb, obj)
             sentence.setNegated(True)
-
+            
     output = realiser.realiseSentence(sentence)
     return output
 
