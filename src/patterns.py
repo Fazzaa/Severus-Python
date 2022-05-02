@@ -49,6 +49,22 @@ pattern_verb = [
     "RIGHT_ATTRS": {"DEP": {"IN" : ["dobj","compound"]}}
     }
 ]
+
+pattern_verb_2 = [
+    {"RIGHT_ID": "uses",
+     "RIGHT_ATTRS": {"LEMMA": {"IN" : ["use"]}}
+    },
+    {"LEFT_ID": "uses",
+    "REL_OP": ">",
+    "RIGHT_ID": "ingredient_1",
+    "RIGHT_ATTRS": {"DEP": {"IN" : ["dobj"]}}
+    },
+    {"LEFT_ID": "uses",
+    "REL_OP": ">",
+    "RIGHT_ID": "ingredient_2",
+    "RIGHT_ATTRS": {"DEP": {"IN" : ["prep", "dobj"]}}
+    }
+]
     
 
 #? Sembra funzionante su passivo
