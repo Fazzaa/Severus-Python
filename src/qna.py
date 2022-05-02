@@ -56,14 +56,19 @@ def ask_ingredients(f):
 
 # frase del tipo: "Which ingredients are in Polyjuice potion ingredient's list?"
 def ask_ingredients_be_0(frame):
-    verb = nlg_factory.createVerbPhrase("be")
-    verb.addPreModifier("Which")
+    n = pick_random([1,2])
+    if n == 1:
+        verb = nlg_factory.createVerbPhrase("be")
+    if n == 2:
+        verb = nlg_factory.createVerbPhrase("be")
+        verb.setFeature(nlg.Feature.FORM, nlg.Form.IMPERATIVE)
+        verb.addPreModifier("must")
     subject = nlg_factory.createNounPhrase("ingredient")
     subject.setPlural(True)
     object = nlg_factory.createNounPhrase("list")
     object.addPreModifier("in " + f"{frame.get_potion_name()}" +  " ingredient's")
     sentence = nlg_factory.createClause(subject, verb, object)
-    sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.YES_NO)
+    sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_SUBJECT)
     output = realiser.realiseSentence(sentence)
     return output
 
@@ -190,4 +195,6 @@ def valutation(frame, vote):
     output = realiser.realiseSentence(sentence_1)
     return output
 
-
+frame = Frame()
+frame.add_potions()
+print(ask_ingredients_be_0(frame))
