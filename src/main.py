@@ -33,22 +33,16 @@ else:
     name = speech_recognition()
     find_pattern_name(f, pattern_name, name)
     print(start_interview(f))
-    print(f.get_mood())
-    print(f.get_chances())
 
-    while (len(f.get_student_ingredients()) < f.get_ingredients_number()) and f.get_chances() > 0:
-        print(ask_ingredients(f))
+    while not f.full_frame() and f.get_chances() > 0:
         answer = speech_recognition()
         result = test_patterns(answer)
         
         if f.check_response(result):
-            print("Buono")
+            print(good_response())
         else:
             print(bad_response())
             f.dec_chances()
-            print(test_patterns(answer))
         
-    if f.get_chances() == 0:
-        print("Figlio di puttana studia")
-    else:
-        print("Sei l'orgoglio di Mazzei")
+    vote = get_vote(f)
+    print(valutation(f, vote))
