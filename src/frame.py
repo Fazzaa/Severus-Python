@@ -13,6 +13,9 @@ class Frame:
         self.mood = random.randint(0,2) # from 0 to 2 (0 = happy, 1 = neutral, 2 = angry)
         self.chances = len(self.potions[self.potion_name]) - self.mood
 
+    def get_initial_chances(self):
+        return len(self.potions[self.potion_name]) - self.mood
+
     def dec_chances(self):
         self.chances -= 1
 
