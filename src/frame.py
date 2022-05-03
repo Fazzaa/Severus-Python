@@ -76,11 +76,13 @@ class Frame:
     #! SE ARRIVA UNA LISTA DI INGREDIENTI, DA GESTIRE
     #TODO:lavorare su stemming e rimozioni parti non necessarie 
     def check_response(self, ingredient):
-        for i in self.potions[self.potion_name]:
-            if i.lower() == ingredient.lower()  and (i not in self.student_ingredients):
-                self.student_ingredients.append(i)
-                return True
-        return False
+        res = False
+        for el in ingredient:
+            for i in self.potions[self.potion_name]:
+                if i.lower() == el.lower()  and (i not in self.student_ingredients):
+                    self.student_ingredients.append(i)
+                    res = True
+        return res
         
     def full_frame(self):
         return self.get_ingredients_number() <= len(self.get_student_ingredients())
