@@ -29,20 +29,27 @@ if speech == "0":
 
 #? SPEECH RECOGNITION ON
 else:
-    print(greetings())
+    text = greetings()
+    text_to_speech(text)
     name = speech_recognition()
     find_pattern_name(f, pattern_name, name)
-    print(start_interview(f))
+    text = start_interview(f)
+    text_to_speech(text)
 
     while not f.full_frame() and f.get_chances() > 0:
+        text_to_speech(ask_ingredients(f))
+
         answer = speech_recognition()
         result = test_patterns(answer)
         
         if f.check_response(result):
-            print(good_response())
+            text = good_response(f, result)
+            text_to_speech(text)
         else:
-            print(bad_response())
+            text = bad_response(f, result)
+            text_to_speech(text)
             f.dec_chances()
         
     vote = get_vote(f)
-    print(valutation(f, vote))
+    text = valutation(f, vote)
+    text_to_speech(text)

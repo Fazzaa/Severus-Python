@@ -17,6 +17,7 @@ def speech_recognition():
     return result
 
 def text_to_speech(text):
-    tts = gtts.gTTS(text, lang="it")
+    tts = gtts.gTTS(text, lang="en")
     tts.save("audio.mp3")
     playsound("audio.mp3")
+
