@@ -193,6 +193,14 @@ def valutation(frame, vote):
         obj.addPreModifier("very")
     sentence_1 = nlg_factory.createClause(subj, verb, obj)
     output = realiser.realiseSentence(sentence_1)
+    
+    subj_2 = nlg_factory.createNounPhrase("vote")
+    subj_2.addPreModifier("Your")
+    verb_2 = nlg_factory.createVerbPhrase("be")
+    obj_2 = nlg_factory.createNounPhrase(str(vote))
+    sentence_2 = nlg_factory.createClause(subj_2, verb_2, obj_2)
+    
+    output += realiser.realiseSentence(sentence_2)
     return output
 
 frame = Frame()
