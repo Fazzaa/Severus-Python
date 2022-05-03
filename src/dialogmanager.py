@@ -53,6 +53,7 @@ def test_patterns(text):
     while i < len(patterns):
         result = get_matched_patterns_from_dependency(patterns_name[i], patterns[i], text)
         if result[0] != "No Match":
+            result = result.split(",")
             return result
         i += 1
     text = text.split(',')
