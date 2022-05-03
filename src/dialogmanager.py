@@ -55,7 +55,7 @@ def test_patterns(text):
         if result[0] != "No Match":
             return result
         i += 1
-    text = text.split(',')    
+    text = text.split(',')
     return text
 
 def similar(a, b):
@@ -63,7 +63,6 @@ def similar(a, b):
 
 def get_vote(frame):
     good_answer = round((len(frame.get_student_ingredients()) / frame.get_ingredients_number())*30, 0)
-    print(good_answer)
     if frame.full_frame():
         if frame.get_chances() < frame.get_initial_chances():
             return good_answer - frame.get_mood()
