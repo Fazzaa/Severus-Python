@@ -6,8 +6,8 @@ from spacy.matcher import DependencyMatcher
 from difflib import SequenceMatcher
 
 
-patterns_name = ["passive_pattern_common","passive_pattern_propn", "pattern_verb","pattern_aux", "pattern_verb_2"]
-patterns = [passive_pattern_common, passive_pattern_propn, pattern_verb, pattern_aux, pattern_verb_2]
+patterns_name = ["passive_pattern_common","passive_pattern_propn", "pattern_verb","pattern_aux", "pattern_verb_2","passive_pattern"]
+patterns = [passive_pattern_common, passive_pattern_propn, pattern_verb, pattern_aux, pattern_verb_2, passive_pattern]
 
 nlp = spacy.load('en_core_web_sm')
         
@@ -27,7 +27,7 @@ def get_matched_patterns_from_dependency(name_pattern, pattern, text):
     for match in matches:
         match_words = sorted(match[1])
         print(match_words)
-        if name_pattern == "passive_pattern_propn" or name_pattern == "passive_pattern_common":
+        if name_pattern == "passive_pattern_propn" or name_pattern == "passive_pattern_common" or name_pattern == "passive_pattern":
             matched_elements.append(doc[match_words[0]:match_words[len(match_words)-1]][:-1])
         elif name_pattern == "pattern_verb" or name_pattern == "pattern_aux" or name_pattern == "pattern_verb_2":
             matched_elements.append(doc[match_words[0]+1:match_words[len(match_words)-1]+1])

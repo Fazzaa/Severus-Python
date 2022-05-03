@@ -75,6 +75,17 @@ passive_pattern_common = [
     "RIGHT_ATTRS": {"DEP": {"IN": ["compound", "amod","poss", "dobj"]}}     
     }
 ]
+passive_pattern = [
+    {"RIGHT_ID": "passive",
+    "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["use", "need"]}}
+    },
+    {
+    "LEFT_ID": "passive",
+    "REL_OP": ">",
+    "RIGHT_ID": "ingredient1",
+    "RIGHT_ATTRS": {"DEP": {"IN": ["nsubjpass", "csubjpass"]}}   
+    }
+]
 passive_pattern_propn = [
     {"RIGHT_ID": "passive",
     "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["use", "need"]}}
