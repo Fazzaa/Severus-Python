@@ -43,7 +43,7 @@ else:
         result = test_patterns(answer)
         
         if f.check_response(result):
-            text = good_response(f, result)
+            text = good_response(f)
             text_to_speech(text)
         else:
             text = bad_response(f)

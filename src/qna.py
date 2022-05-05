@@ -145,6 +145,7 @@ def bad_response(frame):
             sentence.setNegated(True)
         else:
             verb = nlg_factory.createVerbPhrase("be")   
+            verb.setFeature(nlg.Feature.MODAL, "can")
             obj = nlg_factory.createNounPhrase("so", "stupid")
             sentence = nlg_factory.createClause(subj, verb, obj)
             sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.HOW)
