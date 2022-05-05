@@ -257,3 +257,12 @@ def valutation(frame, vote):
     output = realiser.realiseSentence(coord)
     return output
 
+#* Cose da aggiungere:
+
+# TODO : Fare frase che dice "Cosa c'è oltre a *ultimo ingrediente inserito*"
+
+#* Errori da gestire:
+# TODO : Crisopa flies are contained in the potion NON FUNZIONA
+# TODO : bat spleen is used in the potion NON FUNZIONA
+# TODO : Crisopa flies are used in the potions FUNZIONA
+
