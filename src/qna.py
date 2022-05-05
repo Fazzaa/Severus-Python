@@ -181,7 +181,7 @@ def bad_response(frame):
     return output
 
 #*CREDO OK
-def good_response(frame, ingredient):
+def good_response(frame):
     if frame.get_mood() == 2:    
         verb_1 = nlg_factory.createVerbPhrase("be")
         subj_1 = nlg_factory.createNounPhrase("That")
@@ -203,7 +203,7 @@ def good_response(frame, ingredient):
     elif frame.get_mood() == 1:
         s_1 = nlg_factory.createClause("Ok")
 
-        subj_2 = nlg_factory.createNounPhrase(ingredient)
+        subj_2 = nlg_factory.createNounPhrase("it")
         verb_2 = nlg_factory.createVerbPhrase("be")
         obj_2 = nlg_factory.createNounPhrase("correct")
         s_2 = nlg_factory.createClause(subj_2, verb_2, obj_2)

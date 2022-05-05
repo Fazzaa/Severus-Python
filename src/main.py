@@ -19,7 +19,7 @@ if speech == "0":
         result = test_patterns(answer)
         
         if f.check_response(result):
-            print(good_response(f, result))
+            print(good_response(f))
         else:
             print(bad_response(f))
             f.dec_chances()
