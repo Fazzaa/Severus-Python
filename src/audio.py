@@ -16,6 +16,7 @@ def speech_recognition():
             print(result)
         except:
             print("\n")
+        
     return result
 
 def text_to_speech(text):
@@ -25,11 +26,10 @@ def text_to_speech(text):
 
 
 
-tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+'''tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 model = GPT2LMHeadModel.from_pretrained("gpt2")
 sequence = ("Your father was a pig")
 inputs = tokenizer.encode(sequence, return_tensors="pt")
 outputs = model.generate(inputs, max_length=50, do_sample=True, temperature=0.8, top_k=50)
 text = tokenizer.decode(outputs[0], skip_special_tokens=True)
-print(text)
-
+print(text)'''

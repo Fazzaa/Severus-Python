@@ -60,7 +60,7 @@ pattern_verb_2 = [
     
 passive_pattern_common = [
     {"RIGHT_ID": "passive",
-    "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["use", "need"]}}
+    "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["use", "need", "contain"]}}
     },
     {
     "LEFT_ID": "passive",
@@ -77,7 +77,7 @@ passive_pattern_common = [
 ]
 passive_pattern = [
     {"RIGHT_ID": "passive",
-    "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["use", "need"]}}
+    "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["use", "need", "contain"]}}
     },
     {
     "LEFT_ID": "passive",
@@ -88,7 +88,7 @@ passive_pattern = [
 ]
 passive_pattern_propn = [
     {"RIGHT_ID": "passive",
-    "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["use", "need"]}}
+    "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["use", "need", "contain"]}}
     },
     {
     "LEFT_ID": "passive",

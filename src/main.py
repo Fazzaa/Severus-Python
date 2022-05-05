@@ -21,7 +21,7 @@ if speech == "0":
         if f.check_response(result):
             print(good_response(f, result))
         else:
-            print(bad_response(f, result))
+            print(bad_response(f))
             f.dec_chances()
     
     vote = get_vote(f)
@@ -46,7 +46,7 @@ else:
             text = good_response(f, result)
             text_to_speech(text)
         else:
-            text = bad_response(f, result)
+            text = bad_response(f)
             text_to_speech(text)
             f.dec_chances()
         
