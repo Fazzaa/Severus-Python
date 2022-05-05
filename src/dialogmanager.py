@@ -1,11 +1,11 @@
 import random
 import spacy
 from patterns import *
-from spacy.matcher import Matcher
 from spacy.matcher import DependencyMatcher
 from difflib import SequenceMatcher
 
-
+vote_dictionary = {0: "Troll",1: "Troll",2: "Troll",3: "Dreadful",4: "Dreadful",5: "Poor",6: "Acceptable",
+                   7: "Acceptable",8: "Exceeds Expectations",9: "Exceeds Expectations",10: "Outstanding"}
 patterns_name = ["passive_pattern_common","passive_pattern_propn", "pattern_verb","pattern_aux", "pattern_verb_2","passive_pattern"]
 patterns = [passive_pattern_common, passive_pattern_propn, pattern_verb, pattern_aux, pattern_verb_2, passive_pattern]
 
@@ -62,16 +62,19 @@ def test_patterns(text):
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
+
 def get_vote(frame):
-    good_answer = round((len(frame.get_student_ingredients()) / frame.get_ingredients_number())*30, 0)
+    n_vote = round((len(frame.get_student_ingredients()) / frame.get_ingredients_number())*10,0)
     if frame.full_frame():
         if frame.get_chances() < frame.get_initial_chances():
-            return good_answer - frame.get_mood()
+            n_vote = n_vote - frame.get_mood()
     else:
-        if frame.get_mood() == 0 and good_answer >= 16:
-            return 18
+        if frame.get_mood() == 0 and n_vote >= 5:
+            n_vote = 6
     
-    return good_answer
+    return vote_dictionary[n_vote]
+
+
 
 
     
