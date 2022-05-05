@@ -32,13 +32,3 @@ Se la frase xsoddisfa il pattern in ingresso restituisce la porzione di frase ch
 
 ## Notes:
 Use class.funcion().__doc__ to get the documentation of a function.
-
-
-## Appunti vari:
-I tipi di frasi che risuciamo a gestire sono:
-
-- X is cointained in the potion (forse non con >1 ingredienti)
-- X is used in the potion
-- The potion contains X
-- The potion used X
-- The potion need X
