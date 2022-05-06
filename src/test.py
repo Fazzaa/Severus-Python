@@ -60,10 +60,11 @@ class TestSentences(unittest.TestCase):
     '''
 
     def test_all_sentence(self):
-        snts= ["X is cointained in the potion","X is used in the potion","X is need in the potion",
-               "The potion contains X","The potion used X","The potion need X"]
+        snts= ["X is contained in the potion","X are contained in the potion",
+               "X is used in the potion","X are used in the potion",
+               "X is needed in the potion","X are needed in the potion",
+               "The potion contains X","The potion uses X","The potion needs X", "X"]
         file = open("data/potions.txt", "r")
-        prova="The potion contains Crisopa flies"
         err=0
         ok=0
         for line in file:
@@ -78,7 +79,6 @@ class TestSentences(unittest.TestCase):
                         err+=1
                     else:
                         ok+=1
-                    #self.assertEqual(test_patterns(s)[1], ing)
         print(f"Total Error = {err}")
         print(f"Total Correct = {ok}")
         file.close()

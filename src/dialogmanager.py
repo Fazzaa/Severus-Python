@@ -34,7 +34,9 @@ def get_matched_patterns_from_dependency(name_pattern, pattern, text):
 
     if len(matched_elements) == 0:
         return ["No Match"]
+    
     return matched_elements[0].text
+    
 
 def find_pattern_name(frame, pattern, text):
     matcher = DependencyMatcher(nlp.vocab)
@@ -74,7 +76,3 @@ def get_vote(frame):
     
     return vote_dictionary[n_vote]
 
-
-
-
-    
