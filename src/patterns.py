@@ -27,7 +27,7 @@ pattern_aux = [
 
 pattern_verb = [
     {"RIGHT_ID": "contains",
-    "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["contain"]}}
+    "RIGHT_ATTRS": {"LEMMA" : {"IN" : ["contain", "need", "use"]}}
     },
     {
     "LEFT_ID": "contains",
@@ -38,7 +38,7 @@ pattern_verb = [
     {"LEFT_ID": "contains",
     "REL_OP": ">",
     "RIGHT_ID": "ingredient_2",
-    "RIGHT_ATTRS": {"DEP": {"IN" : ["dobj","compound"]}}
+    "RIGHT_ATTRS": {"DEP": {"IN" : ["dobj","compound", "ccomp"]}}
     }
 ]
 
