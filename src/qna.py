@@ -228,6 +228,23 @@ def good_response(frame):
 
 #*OK
 def valutation(frame, vote):
+    if frame.get_mood() == 3:
+        subj_potter = nlg_factory.createNounPhrase("you")
+        verb_potter = nlg_factory.createVerbPhrase("be like")
+        obj_potter = nlg_factory.createNounPhrase("dad")
+        obj_potter.setDeterminer("your")
+        s_potter_1 = nlg_factory.createClause(subj_potter, verb_potter, obj_potter)
+
+        #noun_potter = nlg_factory.createClause(f"{frame.get_student_name()}")
+
+        coord = nlg_factory.createCoordinatedPhrase()
+        coord.setConjunction(",")
+        coord.addCoordinate(s_potter_1)
+        coord.addCoordinate(f"{frame.get_student_name()}")
+
+        output = realiser.realiseSentence(coord)
+        return output
+
     s_1 = nlg_factory.createClause(f"Well {frame.get_student_name()}")
 
     verb_2 = nlg_factory.createVerbPhrase("go")
@@ -267,3 +284,9 @@ def valutation(frame, vote):
 # TODO : bat spleen is used in the potion NON FUNZIONA
 # TODO : Crisopa flies are used in the potions FUNZIONA
 
+f = Frame()
+f.set_potion_name("Polyjuice potion")
+f.set_student_name("Potter")
+f.set_mood(3)
+
+print(valutation(f, "Troll"))
