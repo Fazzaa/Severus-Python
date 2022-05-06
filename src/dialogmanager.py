@@ -66,7 +66,7 @@ def test_patterns(text):
             result = result.split(",")
             return result
         i += 1
-    text = text.split(',')
+    text = text.split(",")
     return text
 
 def similar(a, b):
