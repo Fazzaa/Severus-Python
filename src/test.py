@@ -12,7 +12,7 @@ class TestFrameMethods(unittest.TestCase):
     def test_check_response(self):
         f = Frame()
         f.set_potion_name("Polyjuice potion")
-        self.assertTrue(f.check_response({"Crisopa flies"}))
+        self.assertTrue(f.check_response({"crisopa flies"}))
 
 class TestDialogueManagerMethods(unittest.TestCase):
 
@@ -21,25 +21,25 @@ class TestDialogueManagerMethods(unittest.TestCase):
         result = get_matched_patterns_from_dependency("passive_pattern_common", passive_pattern_common, answer)
         self.assertEqual(result, "puffer fish eyes")
 
-    def test_passive_pattern_propn(self):
+    def test_passive_pattern_2(self):
         answer = "Puffer Fish Eyes is used in the potion"
-        result = get_matched_patterns_from_dependency("passive_pattern_propn", passive_pattern_propn, answer)
-        self.assertEqual(result, "Puffer Fish Eyes")
+        result = get_matched_patterns_from_dependency("passive_pattern_2", passive_pattern_2, answer)
+        self.assertEqual(result, "puffer fish eyes")
 
     def test_passive_pattern_common_2(self):
         answer = "Murtlap's tentacle is used in the potion"
         result = get_matched_patterns_from_dependency("passive_pattern_common", passive_pattern_common, answer)
-        self.assertEqual(result, "Murtlap's tentacle")
+        self.assertEqual(result, "murtlap's tentacle")
 
     def test_pattern_aux(self):
         answer = "the answer is Crisopa Flies..."
         result = get_matched_patterns_from_dependency("pattern_aux", pattern_aux, answer)
-        self.assertEqual(result, "Crisopa Flies")
+        self.assertEqual(result, "crisopa flies")
 
     def test_pattern_verb(self):
         answer = "the potion contains Crisopa flies"
         result = get_matched_patterns_from_dependency("pattern_verb", pattern_verb, answer)
-        self.assertEqual(result, "Crisopa flies")
+        self.assertEqual(result, "crisopa flies")
 
     def test_pattern_name(self):
         f = Frame()
@@ -49,16 +49,6 @@ class TestDialogueManagerMethods(unittest.TestCase):
         
 class TestSentences(unittest.TestCase):
           
-    ''' Esempi di frasi:
-    I tipi di frasi che risuciamo a gestire sono:
-
-    - X is cointained in the potion (forse non con >1 ingredienti)
-    - X is used in the potion
-    - The potion contains X
-    - The potion used X
-    - The potion need X
-    '''
-
     def test_all_sentence(self):
         snts= ["X is contained in the potion","X are contained in the potion",
                "X is used in the potion","X are used in the potion",

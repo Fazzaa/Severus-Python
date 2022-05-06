@@ -6,37 +6,45 @@ from difflib import SequenceMatcher
 
 vote_dictionary = {0: "Troll",1: "Troll",2: "Troll",3: "Dreadful",4: "Dreadful",5: "Poor",6: "Acceptable",
                    7: "Acceptable",8: "Exceeds Expectations",9: "Exceeds Expectations",10: "Outstanding"}
-patterns_name = ["passive_pattern_common","passive_pattern_propn", "pattern_verb","pattern_aux", "pattern_verb_2","passive_pattern"]
-patterns = [passive_pattern_common, passive_pattern_propn, pattern_verb, pattern_aux, pattern_verb_2, passive_pattern]
+patterns_name = ["passive_pattern_2","pattern_verb_5", "pattern_verb_4","passive_pattern_propn", "passive_pattern_common", "pattern_verb","pattern_aux", "pattern_verb_2","passive_pattern", "pattern_verb_3"]
+patterns = [passive_pattern_2, pattern_verb_5, pattern_verb_4,passive_pattern_propn, passive_pattern_common, pattern_verb, pattern_aux, pattern_verb_2, passive_pattern, pattern_verb_3]
 
 nlp = spacy.load('en_core_web_sm')
         
 def pick_random(phrases_list):
     return random.choice(phrases_list)
 
-# TODO: riuscire a passare in input una lista di patter (?) e magari una lista di nomi di pattern associati 
-# TODO: (in modo da riuscire a capire quale pattern ha fatto match e avere il nome del pattern)
+def get_longest(match_list):
+    l = ""
+    for match in match_list:
+        if len(match) > len(l):
+            l = match
+    return l
+
+
 
 def get_matched_patterns_from_dependency(name_pattern, pattern, text):
     matched_elements = [] 
     matcher = DependencyMatcher(nlp.vocab)
     matcher.add(name_pattern, [pattern])
-    doc = nlp(text)
+    doc = nlp(text.lower())
     matches = matcher(doc)
     matches.sort(key = lambda x : x[1])
     for match in matches:
         match_words = sorted(match[1])
-        print(match_words)
-        if name_pattern == "passive_pattern_propn" or name_pattern == "passive_pattern_common" or name_pattern == "passive_pattern":
+        print(name_pattern)
+        if name_pattern == "passive_pattern_propn" or name_pattern == "passive_pattern_common" or name_pattern == "passive_pattern" or name_pattern == "passive_pattern_2":
             matched_elements.append(doc[match_words[0]:match_words[len(match_words)-1]][:-1])
-        elif name_pattern == "pattern_verb" or name_pattern == "pattern_aux" or name_pattern == "pattern_verb_2":
+        elif name_pattern == "pattern_verb" or name_pattern == "pattern_aux" or name_pattern == "pattern_verb_2" or name_pattern == "pattern_verb_3" or name_pattern == "pattern_verb_4" or name_pattern == "pattern_verb_5":
             matched_elements.append(doc[match_words[0]+1:match_words[len(match_words)-1]+1])
 
     if len(matched_elements) == 0:
-        return ["No Match"]
+        return "No Match"
     
-    return matched_elements[0].text
+    result = get_longest(matched_elements)
+    return result.text
     
+
 
 def find_pattern_name(frame, pattern, text):
     matcher = DependencyMatcher(nlp.vocab)
@@ -54,7 +62,7 @@ def test_patterns(text):
     i = 0
     while i < len(patterns):
         result = get_matched_patterns_from_dependency(patterns_name[i], patterns[i], text)
-        if result[0] != "No Match":
+        if result != "No Match":
             result = result.split(",")
             return result
         i += 1
