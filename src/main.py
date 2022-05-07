@@ -14,13 +14,18 @@ if speech == "0":
     print(start_interview(f))
     print(f"You have {f.get_chances()} chances")
     
+    answer = input(ask_ingredients(f))
     while not f.full_frame() and f.get_chances() > 0:
-        answer = input(ask_ingredients(f))
         result = test_patterns(answer)
-        
         if f.check_response(result):
             if not f.full_frame():
-                print(good_response(f))
+                if len(result) == 1: #Se ha inserito un solo ingrediente rispondo così
+                    print(ask_besides_ingredient(f))
+                elif f.remaining_ingredients() == 1:#Se gli manca un solo ingrediente da inserire rispondo così
+                    print(last_ingredient())
+                else:
+                    print(good_response(f))
+                    answer = input(ask_ingredients(f))
         else:
             print(bad_response(f))
             f.dec_chances()
