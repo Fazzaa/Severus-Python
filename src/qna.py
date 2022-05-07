@@ -226,6 +226,44 @@ def good_response(frame):
 
     return output
 
+def ask_besides_ingredient(ingredient):
+    s_0 = nlg_factory.createClause("Ok")
+
+    subj_2 = nlg_factory.createNounPhrase("it")
+    verb_2 = nlg_factory.createVerbPhrase("be")
+    obj_2 = nlg_factory.createNounPhrase("correct")
+    s_2 = nlg_factory.createClause(subj_2, verb_2, obj_2)
+
+    coord = nlg_factory.createCoordinatedPhrase()
+    coord.setConjunction(",")
+    coord.addCoordinate(s_0)
+    coord.addCoordinate(s_2)
+    subj = nlg_factory.createNounPhrase("the", "potion")
+    verb = nlg_factory.createVerbPhrase("contain")
+    obj = nlg_factory.createNounPhrase("ingredient")
+    p_2 = nlg_factory.createNounPhrase(f"besides {ingredient}")
+    s_1 = nlg_factory.createClause(subj, verb, obj)
+    s_1.addPostModifier(p_2)
+    s_1.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
+
+    output = realiser.realiseSentence(coord) + " " + realiser.realiseSentence(s_1)
+    return output
+
+
+def last_ingredient():
+    verb = nlg_factory.createVerbPhrase("be")
+    subj = nlg_factory.createNounPhrase("That")
+    obj = nlg_factory.createNounPhrase("the correct", "ingredient")
+    s_1 = nlg_factory.createClause(subj, verb, obj)
+    
+    verb_2 = nlg_factory.createVerbPhrase("be")
+    verb_2.setFeature(nlg.Feature.TENSE, nlg.Tense.PRESENT)
+    subj_2 = nlg_factory.createNounPhrase("the last", "ingredient")
+    s_2 = nlg_factory.createClause(subj_2, verb_2)
+    s_2.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
+    output = realiser.realiseSentence(s_1) + " " + realiser.realiseSentence(s_2)
+    return output
+
 #*OK
 def valutation(frame, vote):
     s_1 = nlg_factory.createClause(f"Well {frame.get_student_name()}")
@@ -257,13 +295,3 @@ def valutation(frame, vote):
 
     output = realiser.realiseSentence(coord)
     return output
-
-#* Cose da aggiungere:
-
-# TODO : Fare frase che dice "Cosa c'è oltre a *ultimo ingrediente inserito*"
-
-#* Errori da gestire:
-# TODO : Crisopa flies are contained in the potion NON FUNZIONA
-# TODO : bat spleen is used in the potion NON FUNZIONA
-# TODO : Crisopa flies are used in the potions FUNZIONA
-
