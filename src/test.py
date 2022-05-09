@@ -33,12 +33,12 @@ class TestDialogueManagerMethods(unittest.TestCase):
 
     def test_pattern_aux(self):
         answer = "the answer is Crisopa Flies..."
-        result = get_matched_patterns_from_dependency("pattern_aux", pattern_aux, answer)
+        result = get_matched_patterns_from_dependency("pattern_aux_1", pattern_aux_1, answer)
         self.assertEqual(result, "crisopa flies")
 
     def test_pattern_verb(self):
         answer = "the potion contains Crisopa flies"
-        result = get_matched_patterns_from_dependency("pattern_verb", pattern_verb, answer)
+        result = get_matched_patterns_from_dependency("pattern_verb_1", pattern_verb_1, answer)
         self.assertEqual(result, "crisopa flies")
 
     def test_pattern_name(self):
@@ -50,13 +50,14 @@ class TestDialogueManagerMethods(unittest.TestCase):
 class TestSentences(unittest.TestCase):
           
     def test_all_sentence(self):
+        
         snts= ["X is contained in the potion","X are contained in the potion",
                "X is used in the potion","X are used in the potion",
                "X is needed in the potion","X are needed in the potion",
-               "The potion contains X","The potion uses X","The potion needs X", "X"]
+               "The potion contains X","The potion uses X","The potion needs X", 
+               "X", "The answer is X"]
         file = open("data/potions.txt", "r")
-        err=0
-        ok=0
+        err, ok = 0,0
         for line in file:
             ing_list = list(line.strip("\n").split(','))
             ing_list.pop(0)
@@ -64,8 +65,8 @@ class TestSentences(unittest.TestCase):
                 for snt in snts:
                     s = snt.replace("X", ing)                    
                     isolated_ing = test_patterns(s)[0]
-                    if(isolated_ing != ing):
-                        print(f"*The ing from patter: {isolated_ing}\n-The Sentence is: {s}\nThe real ing is {ing}\n\n")
+                    if isolated_ing != ing:
+                        print(f"*The match from patter is: {isolated_ing}\n-The starting sentence is: {s}\nThe real ingredient is {ing}\n\n")
                         err+=1
                     else:
                         ok+=1
