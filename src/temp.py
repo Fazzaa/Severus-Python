@@ -66,4 +66,3 @@ else:
     freq[PATTERNS_NAME[i]] += 1
 
 '''
-'''dasddddddddddddd'''
