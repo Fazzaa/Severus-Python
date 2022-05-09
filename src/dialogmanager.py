@@ -5,7 +5,7 @@ from spacy.matcher import DependencyMatcher
 from difflib import SequenceMatcher
 
 nlp = spacy.load('en_core_web_sm')
-        
+
 def pick_random(phrases_list):
     return random.choice(phrases_list)
 
@@ -25,11 +25,11 @@ def get_matched_patterns_from_dependency(name_pattern, pattern, text):
     matches.sort(key = lambda x : x[1])
     for match in matches:
         match_words = sorted(match[1])
-        if name_pattern == "passive_pattern_propn" or name_pattern == "passive_pattern_common" or name_pattern == "passive_pattern" or name_pattern == "passive_pattern_2":
+        if name_pattern in PASSIVE_PATTERNS:
             matched_elements.append(doc[match_words[0]:match_words[len(match_words)-1]][:-1])
-        elif name_pattern == "pattern_verb" or name_pattern == "pattern_aux" or name_pattern == "pattern_verb_2" or name_pattern == "pattern_verb_3" or name_pattern == "pattern_verb_4" or name_pattern == "pattern_verb_5":
+        elif name_pattern in ACTIVE_PATTERNS:
             matched_elements.append(doc[match_words[0]+1:match_words[len(match_words)-1]+1])
-
+        
     if len(matched_elements) == 0:
         return "No Match"
     
