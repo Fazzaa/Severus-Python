@@ -60,5 +60,9 @@ example_words = ["bambino","bambina","mosca","mosche", "Crisopa","crisopa", "cri
 
 for w in example_words:
     print(ps.stem(w))
+if PATTERNS_NAME[i] not in freq:
+    freq[PATTERNS_NAME[i]] = 1
+else:
+    freq[PATTERNS_NAME[i]] += 1
 
 '''
