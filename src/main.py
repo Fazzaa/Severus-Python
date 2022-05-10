@@ -8,6 +8,8 @@ from audio import *
 f = Frame()
 speech = input("Do you want to use the vocal interface? (y=1/n=0)")
 
+#dividere file audio
+
 if speech == "0":
     name = input(greetings())
     find_pattern_name(f, pattern_name, name)
