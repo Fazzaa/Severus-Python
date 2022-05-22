@@ -76,6 +76,7 @@ class Frame:
     #! Problema, se arriva una lista di ingredienti e uno è giusto e uno sbagliato?
     #TODO:lavorare su stemming e rimozioni parti non necessarie 
     def check_response(self, ingredient):
+        ''' Controlla se l'ingrediente è corretto e se lo è aggiunge alla lista di risposte corrette '''
         res = False
         for el in ingredient:
             for i in self.potions[self.potion_name]:

@@ -4,26 +4,43 @@ from patterns import *
 from qna import *
 from audio import *
 
-
+# Genero il frame che corrisponde ad una interrogazione
 f = Frame()
-speech = input("Do you want to use the vocal interface? (y=1/n=0)")
 
-#dividere file audio
+speech = "0"
+#* Scommenta per abilitare audio
+# speech = input("Do you want to use the vocal interface? (y=1/n=0)")
 
+# Controllo per modalità audio
 if speech == "0":
-    name = input(greetings())
-    find_pattern_name(f, pattern_name, name)
-    print(start_interview(f))
-    print(f"You have {f.get_chances()} chances")
     
+    # Salva il nome del lo studente
+    name = input(greetings())
+    # Cerca il nome nella frase
+    find_pattern_name(f, pattern_name, name)
+    # Stampa frase inizio interrogazione
+    print(start_interview(f))
+    # Stampo le chance rimaste
+    print(f"You have {f.get_chances()} chances")
+    # Chiede il primo ingrediente
     answer = input(ask_ingredients(f))
+    
+    # Cicla fino a quando non sono stati detti tutti gli ingredienti o sono state esaurite le chance
     while not f.full_frame() and f.get_chances() > 0:
+        
+        # Estrae l'ingrediente dalla frase
         result = test_patterns(answer)
+        
+        # Controlla se l'ingrediente è corretto
         if f.check_response(result):
+            
+            
             if not f.full_frame():
-                if f.remaining_ingredients() == 1:#Se gli manca un solo ingrediente da inserire rispondo così
-                    answer = input(last_ingredient())
-                elif len(result) == 1: #Se ha inserito un solo ingrediente rispondo così
+                # Se manca un solo ingrediente da inserire rispond così
+                if f.remaining_ingredients() == 1:
+                    answer = input(last_ingredient())                
+                #Se ha inserito un solo ingrediente rispondo così
+                elif len(result) == 1: 
                     answer = input(ask_besides_ingredient(result[0]))
                 else:
                     print(good_response(f))

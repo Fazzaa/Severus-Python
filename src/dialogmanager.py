@@ -17,6 +17,8 @@ def get_longest(match_list):
     return l
 
 def get_matched_patterns_from_dependency(name_pattern, pattern, text):
+    ''' Controllo se il pattern è presente nella frase e ritorno la parola più lunga trovata nella frase
+        Se non trovo nessun pattern ritorno "No Match"'''
     matched_elements = [] 
     matcher = DependencyMatcher(nlp.vocab)
     matcher.add(name_pattern, [pattern])
@@ -37,8 +39,8 @@ def get_matched_patterns_from_dependency(name_pattern, pattern, text):
     return result.text
     
 
-
 def find_pattern_name(frame, pattern, text):
+    '''Cerco il nome all'interno della frase, se non lo trovo con nessun patter ritorno tutta la frase'''
     matcher = DependencyMatcher(nlp.vocab)
     matcher.add("name_pattern", [pattern])
     doc = nlp(text)
@@ -51,8 +53,11 @@ def find_pattern_name(frame, pattern, text):
         frame.set_student_name(name.text)
 
 def test_patterns(text):
+    '''Cerco l'ingrediente all'interno della frase, se non lo trovo con nessun patter ritorno tutta la frase'''
     i = 0
     while i < len(PATTERNS):
+        
+        # Controllo ogni pattern
         result = get_matched_patterns_from_dependency(PATTERNS_NAME[i], PATTERNS[i], text)
         if result != "No Match":
             result = result.split(",")
