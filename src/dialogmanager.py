@@ -7,9 +7,11 @@ from difflib import SequenceMatcher
 nlp = spacy.load('en_core_web_sm')
 
 def pick_random(phrases_list):
+    '''Return a random element from a list'''
     return random.choice(phrases_list)
 
 def get_longest(match_list):
+    '''Return the longest element in a list'''
     l = ""
     for match in match_list:
         if len(match) > len(l):
@@ -56,7 +58,6 @@ def test_patterns(text):
     '''Cerco l'ingrediente all'interno della frase, se non lo trovo con nessun patter ritorno tutta la frase'''
     i = 0
     while i < len(PATTERNS):
-        
         # Controllo ogni pattern
         result = get_matched_patterns_from_dependency(PATTERNS_NAME[i], PATTERNS[i], text)
         if result != "No Match":
@@ -66,10 +67,6 @@ def test_patterns(text):
     text = text.split(",")
     return text
 
-def similar(a, b):
-    return SequenceMatcher(None, a, b).ratio()
-
-
 def get_vote(frame):
     n_vote = round((len(frame.get_student_ingredients()) / frame.get_ingredients_number())*10,0)
     if frame.full_frame():
@@ -78,6 +75,9 @@ def get_vote(frame):
     else:
         if frame.get_mood() == 0 and n_vote >= 5:
             n_vote = 6
+            
+    if frame.get_student_name().lower() == "harry potter":
+        n_vote = 0
     
     return VOTE_DICT[n_vote]
 
