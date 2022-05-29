@@ -4,9 +4,7 @@
 
 ## Introduzione
 Severus Python è un Dialog System che simula un'interrogazione ispirata dalla saga di Harry Potter, nello specifico del corso di pozioni, tenuto dal professore Severus Piton.
-Lo scopo del sistema è domandare allo studente, che non è altro che l'utente che interagisce con il sitema, quali sono gli ingredienti di una pozione, scelta a caso da una lista di 3 pozioni.
-
-<br>
+Il nostro sistena è *task based*, infatti il suo scopo è domandare allo studente, che non è altro che l'utente che interagisce con il sitema, quali sono gli ingredienti di una pozione.
 
 ## Funzionamento di base
 Quello che caratterizza il nostro sistema è la rappresentazione dello stato dell'umore del professore, in grado di influenzare il modo in cui
@@ -59,12 +57,10 @@ La variabile `mood` è una stringa che indica il tipo di umore del professore, 0
 L'umore del professore, come spesso accade anche nel mondo reale, è generato in maniera randomica. Quando irritato sarà molto più secco con le risposte, sopratutto in caso di ettore.
 Inoltre più è arrabbiato, meno chance avrà lo studente di sbagliare una risposta.
 
-<br>
 
 ## Diamo un occhiata al codice:
-<br>
 
-### Classe Main
+### **main**
 Nel main simuliamo il funzionamento dell'intero dialogo. 
 
 **Modalità audio**:
@@ -88,7 +84,7 @@ Una volta selezionata una pozione, l'interazione avrà inizio con la richiesta d
 Andiamo a ricercare nella frase il nome utilizzando, come sempre faremo, il `DependecyMatcher` di spacy.
 Il sistema di dialogo è quindi in grado di capire se il nome è presente nella frase o meno, anche se la frase contiene altre parole oltre al nome (come ad esempio **"My name is Ron Weasley"**).
 
-### Classe Frame
+### **frame**
 Un frame è una struttura dati che utilizziamo per salvare tutti i dati dell'interazione tra l'utente e il sistema di dialogo.
 Nello specifico salviamo le seguenti variabili:
 
@@ -105,7 +101,7 @@ Oltre ai metodi getter e setter, abbiamo altri due metodi:
 - `add_potions` -> Va a leggere il file contenente le pozioni (potions.txt) e le aggiunge alla lista di pozioni del frame
 - `check_response` -> Prende in input l'ingrediente detto dall'utente e se l'ingrendiente è corretto e non è stato già detto, aggiunge l'ingrediente alla lista degli ingredienti corretti.
 
-### Dialogmanagaer
+### **dialogmanager**
 Questo file contiene i metodi in grado di riconoscere il pattern di una frase, con lo scopo di isolare le informazioni importanti di una frase.
 Se la frase soddisfa il pattern in ingresso restituisce la porzione di frase che soddisfa quel pattern.
 Visto che gli ingtredienti delle pozioni hanno nomi caratterizzati da più parole ritorniamo sempre la sotto sequenza più lunga perchè altrimenti il sistema di dialogo potrebbe estrarre solamente una parte dell'ingrediente (es. *"The Crisopa"* e non *"The Crisopa Fly"*)
@@ -117,6 +113,13 @@ quando allo studente viene cheisto il nome.
 - `test_pattern` -> Questo motodo richiama il metodo `get_matched_patterns` per ogni pattern, e ritorna l'ingrediente che rispetta il pattern più lungo. Se non lo trova ritorna tutta la frase. Questo perchè se non trova un pattern la frase potrebbe contenere solamente l'ingrediente.
 - `get_vote` -> Questo metodo ritorna il voto dell'interrogazione. Il voto sarà influenzato dal numero di ingredienti detti dallo studenti sulla base del totale, sul numero di errori commessi e infine, come ogni interrogazione che sis rispetti, dall'umore del professore.
 
+### qna
+Questo file è il file in cui generiamo le frasi con la libreria di simpleNLG
+
+### **constants**
+Contiene tutte le costanti che abbiamo utilizzato nel dialog system, come le liste di stringhe usate e i voti da assegnare.
+
+###
 
 ## I limiti del nostro sistema:
  - **Frasi in input:** Il nostro sistema allo stato attuale è in grado di riconoscre gli ingredienti delle 3 pozioni che abbiamo selezionato.
@@ -130,6 +133,21 @@ Noi ci siamo limitati a generare alcune frasi, che venivano selezionate in base 
  - **Audio mode:** Come abbiamo già detto sopra il nostro sistema funziona bene sul testo scritto, mentre sull'input vocale fa molta fatica. 
 Questo è portato dal fatto che gli ingredienti delle pozioni non sono parole "reali" visto che appartengono ad dominio Fantasy. 
 Inoltre è anche fortemente influenzato dall'ambiente
+
+## Dialog System Architetture:
+
+- **speech reconition**: la parte di speech reconition del nostro sistema è parzialmente funzionante siccome, come già detto prima, non è in grado
+di riconoscere le parole inventate delle pozioni di Harry Potter, per questa ragione l'input del nostro sistema è un input testuale.
+- **language understanding**: per comprendere il linguaggio abbiamo utilizato il `DepenecyMatcher` di spacy e, tramite l'ausilio dei pattern, estraiamo l'informazione importante della frase, 
+che consiste nell'ingrediente della pozione. Questa è la parte più complicata, infatti il nostro sistema funziona solo con un insieme ristretto di frasi in input.
+- **dialog manager**: questa è il cuore pulsante del nostro sistema, in cui si valuta l'input in ingresso (l'ingrediente) e si prendere una decisione su come proseguire la simulazione.
+Nel nostro caso specifico andiamo a controllare se l'ingrediente in ingresso è corretto e, sulla base delle condizioni del sistema (numero di tentativi rimasti, numero di ingredienti mancanti e umore del professore)
+decidiamo che frase generare in output.
+- **response generator**: Questo è il momento in cui andiamo effettivamente a generare la frase in output. 
+Il **text planning* la facciamo nella classe dialog manager, in cui appunto andiamo ad analizzare lo stato del sistema e decidiamo che frase generare.
+Per quanto riguarda il *sentence planning* e la *linguistic realization* usiamo la classe qna in cui abbiamo sfruttato la libreria `simpleNLG`.
+- **text to speech synthesis**: Come per lo *speech reconition* questa caratteristica del sistema e funzionante ma disabilitata siccome l'utente può interagire solo in maniera scritta con il sistema
+
 
 ## Sviluppi futuri:
 
