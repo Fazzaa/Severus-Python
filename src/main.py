@@ -7,13 +7,15 @@ from audio import *
 # Genero il frame che corrisponde ad una interrogazione
 f = Frame()
 
+f.set_mood(0);
+print(f.get_mood())
+
 speech = "0"
 #* Scommenta per abilitare audio
 # speech = input("Do you want to use the vocal interface? (y=1/n=0)")
 
 # Controllo per modalità audio
 if speech == "0":
-    
     # Salva il nome del lo studente
     name = input(greetings())
     # Cerca il nome nella frase
@@ -33,13 +35,12 @@ if speech == "0":
         
         # Controlla se l'ingrediente è corretto
         if f.check_response(result):
-            
-            
+            # Entra solo si sono detti tutti gli ingredienti
             if not f.full_frame():
-                # Se manca un solo ingrediente da inserire rispond così
+                # Se manca un solo ingrediente da inserire risponde così
                 if f.remaining_ingredients() == 1:
                     answer = input(last_ingredient())                
-                #Se ha inserito un solo ingrediente rispondo così
+                # Se ha inserito un solo ingrediente rispond così
                 elif len(result) == 1: 
                     answer = input(ask_besides_ingredient(result[0]))
                 else:

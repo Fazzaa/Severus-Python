@@ -9,9 +9,6 @@ lexicon = nlg.Lexicon.getDefaultLexicon()
 nlg_factory = nlg.NLGFactory(lexicon)
 realiser = nlg.Realiser(lexicon) 
 
-# L'idea è che il dialogue manager scelga quali di queste funzioni usare 
-# a seconda delle risposte dell'utente
-
 #* OK
 def greetings():
     s_1 = nlg_factory.createClause(pick_random(GREETINGS))
@@ -59,9 +56,8 @@ def ask_ingredients(f):
         pass
         #potter_mode()
         
-#######QUESTIONS########
+#! QUESTIONS
 
-#! non controllata
 # frase del tipo: "Which ingredients are in Polyjuice potion ingredient's list?"
 def ask_ingredients_be_0(frame):
     n = pick_random([1,2])
@@ -81,7 +77,6 @@ def ask_ingredients_be_0(frame):
     output = realiser.realiseSentence(sentence)
     return output
 
-#! non controllata
 # frase del tipo: "What does Polyjuice potion contain?"
 def ask_ingredient_contain_0(frame):
     verb = nlg_factory.createVerbPhrase("contain")
@@ -92,7 +87,6 @@ def ask_ingredient_contain_0(frame):
     output = realiser.realiseSentence(sentence)
     return output
 
-#! non controllata
 # frase del tipo: "What does Polyjuice potion else contain?"
 def ask_ingredient_contain_else(potion):
     verb = nlg_factory.createVerbPhrase("contain")
@@ -104,8 +98,6 @@ def ask_ingredient_contain_else(potion):
     output = realiser.realiseSentence(sentence)
     return output
 
-
-#! non controllata
 # frase del tipo: "Which ingredient between Crisopa fly and Murtlap's tentacle is in Polyjuice potion ingredient's list?"
 def ask_ingredient_between(potion, ingredient1, ingredient2):
     verb = nlg_factory.createVerbPhrase("be")
@@ -119,7 +111,6 @@ def ask_ingredient_between(potion, ingredient1, ingredient2):
     output = realiser.realiseSentence(sentence)
     return output
 
-#! non controllata
 def ask_not_contain(potion):
     sentence = nlg_factory.createClause()
     sentence.setSubject(f"{potion}")
@@ -132,8 +123,8 @@ def ask_not_contain(potion):
     output = realiser.realiseSentence(sentence)
     return output
 
-########ANSWERS########
-#?DA REVISIONARE ALCUNE FRASI
+#! ANSWERS
+
 def bad_response(frame):
     n = pick_random([1,2])
     if frame.get_mood() == 2:
@@ -181,7 +172,7 @@ def bad_response(frame):
     output = realiser.realiseSentence(sentence)
     return output
 
-#*CREDO OK
+#* OK
 def good_response(frame):
     if frame.get_mood() == 2:    
         verb_1 = nlg_factory.createVerbPhrase("be")
