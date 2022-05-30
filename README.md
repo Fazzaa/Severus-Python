@@ -184,3 +184,4 @@ Per quanto riguarda il *sentence planning* e la *linguistic realization* usiamo 
 
 ## Notes:
 Use class.funcion().__doc__ to get the documentation of a function.
+Sito utilizzato pe conversione in pdf: https://cloudconvert.com/md-to-pdf

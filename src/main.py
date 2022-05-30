@@ -7,8 +7,9 @@ from audio import *
 # Genero il frame che corrisponde ad una interrogazione
 f = Frame()
 
-f.set_mood(0);
-print(f.get_mood())
+f.set_mood(2);
+#print(f.get_mood())
+print("\n")
 
 speech = "0"
 #* Scommenta per abilitare audio
@@ -17,15 +18,15 @@ speech = "0"
 # Controllo per modalità audio
 if speech == "0":
     # Salva il nome del lo studente
-    name = input(greetings())
+    name = input(f'{greetings()}\n-> ')
     # Cerca il nome nella frase
     find_pattern_name(f, pattern_name, name)
     # Stampa frase inizio interrogazione
     print(start_interview(f))
     # Stampo le chance rimaste
-    print(f"You have {f.get_chances()} chances")
+    # print(f"You have {f.get_chances()} chances")
     # Chiede il primo ingrediente
-    answer = input(ask_ingredients(f))
+    answer = input(f'{ask_ingredients(f)}\n-> ')
     
     # Cicla fino a quando non sono stati detti tutti gli ingredienti o sono state esaurite le chance
     while not f.full_frame() and f.get_chances() > 0:
@@ -39,18 +40,18 @@ if speech == "0":
             if not f.full_frame():
                 # Se manca un solo ingrediente da inserire risponde così
                 if f.remaining_ingredients() == 1:
-                    answer = input(last_ingredient())                
+                    answer = input(f'{last_ingredient()}\n-> ')                
                 # Se ha inserito un solo ingrediente rispond così
                 elif len(result) == 1: 
-                    answer = input(ask_besides_ingredient(result[0]))
+                    answer = input(f'{ask_besides_ingredient(result[0])}\n-> ')
                 else:
                     print(good_response(f))
-                    answer = input(ask_ingredients(f))     
+                    answer = input(f'{ask_ingredients(f)}\n-> ')     
         else:
             print(bad_response(f))
             f.dec_chances()
             if f.get_chances() > 0:
-                answer = input(ask_ingredients(f))
+                answer = input(f'{ask_ingredients(f)}\n-> ')
     
     vote = get_vote(f)
     print(valutation(f, vote))
