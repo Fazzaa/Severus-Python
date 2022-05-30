@@ -3,33 +3,29 @@
 # Severus Python
 
 ## Introduzione
-Severus Python è un Dialog System che simula un'interrogazione ispirata dalla saga di Harry Potter, nello specifico del corso di pozioni, tenuto dal professore Severus Piton.
-Il nostro sistena è *task based*, infatti il suo scopo è domandare allo studente, che non è altro che l'utente che interagisce con il sitema, quali sono gli ingredienti di una pozione.
+Severus Python è un Dialog System che simula un'interrogazione ispirata alla saga di Harry Potter, nello specifico del corso di pozioni, tenuto dal professor Severus Piton.
+Il nostro sistema è *task based*, infatti il suo scopo è domandare allo studente, che non è altro che l'utente che interagisce con il sistema, quali sono gli ingredienti di una pozione.
 
 ## Funzionamento di base
-Quello che caratterizza il nostro sistema è la rappresentazione dello stato dell'umore del professore, in grado di influenzare il modo in cui
-vengono generate le frasi. Nello specifico il sistema risponderà in maniera più fredda e irritata a seconda dell'umore.
+Quello che caratterizza il nostro sistema è la rappresentazione dello stato dell'umore del professore, in grado di influenzare la generazione del testo e il numero di tentativi a disposizione dello studente.
+Nello specifico il sistema risponderà in maniera più fredda e irritata a seconda dell'umore.
 All'inizio di ogni simulazione il dialog manager setterà una variabile che rappresenta il numero di tentivi a disposizione dello studente.
-Il numero di tentativi si decrementerà di 1 ogni votla che lo studente sbaglierà una risposta, al termine dei tentivi il sistema terminerà la simulazione.
-L'umore del professore andrà ad influenzare il numero di tentivi, andandoli a decrementare in modo da rendere l'interrogazione più difficile.
+Tale numero si decrementerà di 1 ogni votla che lo studente sbaglierà una risposta. 
+All'esaurirsi dei tentativi il sistema terminerà la simulazione, fornendo un voto all'utente.
 
 Il sistema andrà a domandare allo studente di elencare uno alla volta gli ingredienti di una pozione. 
-Dovrà quindi capire ed estrarre l'ingrediente dalla frase, controllare se è corretto e comunicare allo studente (l'utente) se l'ingrediente inserito è corretto o meno.
+Dovrà quindi capire ed estrarre l'ingrediente dalla frase, controllare se è corretto e comunicarlo allo studente.
 La simulazione terminerà quando lo studente avrà detto tutti gli ingredienti della pozione, o quando avrà esaurito i tentativi.
-Abbiamo
 
-## Come estraiamo le informazioni dalla frase:
-Per trovare le informazioni utili all'interno della frase, come gli ingredienti e il nome dello studente, utilizziamo il `DependecyMatcher` di spacy, grazie alle quali troviamo le relazioni di dipendenza all'interno della frasi.
-Abbiamo analizzato un insieme di possibili frasi in input e abbiamo scoperto che le frasi avevano una struttura simile. 
-Grazie a questa caratteristica siamo riusciti a capire la dipendenza associata agli ingredienti presenti nella frase e a creare dei pattern in grado di riconoscere gli ingredienti in varie frasi.
+## Come estraiamo le informazioni dalla frase
+Per trovare le informazioni utili all'interno della frase, come gli ingredienti e il nome dello studente, utilizziamo il `DependecyMatcher` di spacy, grazie al quale troviamo le relazioni di dipendenza all'interno delle frasi.
+Abbiamo analizzato un insieme di possibili frasi in input e abbiamo scoperto che le frasi avevano una struttura simile.
+Da questa conclusione abbiamo costruito la struttura dei pattern, che sono in grado di isolare porzioni dell'albero a dipendenze della frase in input.
+Queste porzioni corrispondono alle informazioni che vogliamo estrarre dalla frase, come gli ingredienti e il nome dello studente.
 Abbiamo generato 11 pattern in grado di riconoscere tutti gli ingredienti presenti nelle 3 pozioni che abbiamo selezionato.
 
-
-## Le frasi di input:
+## Le frasi in input
 Abbiamo selezionato un insieme di frasi in input e abbiamo deciso di restringere il dominio del nostro sistema a queste frasi.
-La parte difficile, come vedremmo dopo, riguarda proprio il dominio. Infatti abbiamo avuto molti problemi siccome gli ingredienti delle pozioni, 
-che appartengono all'universo di Harry Potter, quindi al mondo fantasy, non sono parole che vengono usate tutti i giorni. Questo ha reso particolarmente difficile
-l'estrazione delle informazioni dalle frasi. Per risolvere questo problema abbiamo generato dei pattern che riconoscano tutti gli ingredienti delle nostre 3 pozioni.
 
 Le frasi su cui abbiamo lavorato sono:
 - X is contained in the potion
@@ -44,21 +40,21 @@ Le frasi su cui abbiamo lavorato sono:
 - X
 - The answer is X
 
-Dove al posto di X ci sono i vari ingredienti della pozione.
+Dove al posto di X ci sono i vari ingredienti delle pozioni.
 
 Nella file `test.py` abbiamo definito delle funzioni che permettono di testare il corretto funzionamento del sistema.
 Nello specifico nella classe `TestSentences` abbiamo testato tutte le possibili combinazioni, ottenendo, per il nostro insieme di ingredinenti e il nostro insieme di frasi,
 un accuratezza del 100%. 
-In pratica il nostro sistema è sempre in grado di estrarre un ingrediente da una frase se la frase ha la struttura delle frasi sopra citate e, ovviamente, l'ingrediente è presente nella nostra lista di ingredienti.
+In pratica il nostro sistema è sempre in grado di estrarre un ingrediente da una delle frasi sopra citate se l'ingrediente è presente nella nostra lista di ingredienti.
 
-## Come abbiamo strutturato il comportamento del dialog system:
+## Come abbiamo strutturato il comportamento del dialog system
 Dovendo simulare il comportamento di un professore come Piton, noto per essere particolarmente scorbutico, le risposte del nostro sistema di dialogo sono guidate dal suo umore, caratterizzato da una variabile `mood`.
-La variabile `mood` è una stringa che indica il tipo di umore del professore, 0 rappresenta uno stato di quiete, mentre lo stato 3 rappresenta uno stato di irritazione.
-L'umore del professore, come spesso accade anche nel mondo reale, è generato in maniera randomica. Quando irritato sarà molto più secco con le risposte, sopratutto in caso di ettore.
-Inoltre più è arrabbiato, meno chance avrà lo studente di sbagliare una risposta.
+La variabile `mood` è un intero che rappresenta l'umore del professore. 
+Questo valore oscilla tra 0 (stato di quiete/felicità) e 2 (stato di irritazione massima).
+L'umore del professore è generato in maniera randomica. Quando irritato sarà molto più secco con le risposte, sopratutto in caso di errore.
+Inoltre più è arrabbiato, meno chance avrà lo studente di sbagliare.
 
-
-## Diamo un occhiata al codice:
+## Diamo un'occhiata al codice
 
 ### **main**
 Nel main simuliamo il funzionamento dell'intero dialogo. 
@@ -66,34 +62,37 @@ Nel main simuliamo il funzionamento dell'intero dialogo.
 **Modalità audio**:
 
 Abbiamo implementato anche la possibilità di avere un dialogo verbale con il nostro Dialog System.
-Per farlo abbiamo utilizzato il pacchetto `pyttsx3`, grazie alla quale siamo riusciti a riprodurre le frasi dagli speacker del computer e ad inserire le risposte tramite il microfono.
+Per farlo abbiamo utilizzato una libreria di google, grazie alla quale siamo riusciti a riprodurre le frasi dagli autoparlanti del computer e ad inserire le risposte tramite il microfono.
 
 *Problematiche modalità audio:*
 
-- Purtroppo gli ingredienti delle pozioni sono per la maggior parte parole inventate, che il sintetizzatore di google non riesce a capire e ritorna gli ingredienti scritti male.
+Purtroppo gli ingredienti delle pozioni sono per la maggior parte parole inventate, che il sintetizzatore di google non riesce a capire.
+Per questa ragione abbiamo disabilitato questa funzionalità in quanto gli ingredienti non venivano riconosciuti.
+Inoltre le performance del **TTS** sono influenzate dal microfono e dal rumore ambientale.
 
-<br>
+*Possibili soluzioni:*
 
-**Inizio Interazione**:
+ - Abbiamo sperimentato il sistema con parole di uso comune e abbiamo visto che il sistema è in grado di capire gli ingredienti.
+ - Un'altra possibile soluzione è sfruttare una funzione di google (`recognize_google_cloud`) che ti permette di specificare il testo atteso e guidare il traduttore verso la corretta parola.
 
-Inizia generando un istanza della classe Frame, in cui saranno salvate tutte le informazioni riguardanti l'interazione, come i dettagli della pozione.
+**Inizio Interazione**
+
+Il sistema inizia generando un'istanza della classe Frame, in cui saranno salvate tutte le informazioni riguardanti l'interazione, come i dettagli della pozione.
 La pozione sarà estratta a caso tra una lista di 3 pozioni dal file *potions.txt*.
-I dettagli della classe Frame li vedremo dopo.
+I dettagli della classe Frame li vedremo in seguito.
 
 Una volta selezionata una pozione, l'interazione avrà inizio con la richiesta del nome del partecipante.
-Andiamo a ricercare nella frase il nome utilizzando, come sempre faremo, il `DependecyMatcher` di spacy.
+Andiamo a ricercare nella frase il nome utilizzando, come sempre faremo, il `DependecyMatcher` di spacy. 
 Il sistema di dialogo è quindi in grado di capire se il nome è presente nella frase o meno, anche se la frase contiene altre parole oltre al nome (come ad esempio **"My name is Ron Weasley"**).
 
 ### **frame**
-Un frame è una struttura dati che utilizziamo per salvare tutti i dati dell'interazione tra l'utente e il sistema di dialogo.
+Un frame è una struttura dati che utilizziamo per salvare tutte le informazioni ricavate dall'interazione tra utente e sistema.
 Nello specifico salviamo le seguenti variabili:
 
 * `potions` -> La lista di pozioni
 * `student_ingridients` -> La lista degli ingredienti corretti detti da uno studente
 * `potion_name` -> Il nome della pozione corrente, oggetto dell'interrogazione
 * `student_name` -> Il nome dello studente
-* `student_potion_name` -> 
-* `add_potion` -> Richiamiamo la funzione add potions che aggiunge la lista delle pozioni al frame
 * `mood` -> Indica l'umore del professore
 
 Oltre ai metodi getter e setter, abbiamo altri due metodi:
@@ -154,7 +153,14 @@ Per quanto riguarda il *sentence planning* e la *linguistic realization* usiamo 
 
 
 ## Sviluppi futuri:
+Il sistema è in grado di riconoscere anche più ingredienti all'interno di una singola frase ma solo se messi in elenco. 
+Per fare in modo che riesca a riconoscere frasi con più ingredienti bisognerebbe creare dei nuovi pattern.
 
+## Concetti da rivedere
+
+La parte difficile riguarda proprio il dominio. Infatti abbiamo avuto molti problemi siccome gli ingredienti delle pozioni, 
+che appartengono all'universo di Harry Potter, non sono parole che vengono usate tutti i giorni. Questo ha reso particolarmente difficile
+l'estrazione delle informazioni dalle frasi. Per risolvere questo problema abbiamo generato dei pattern che riconoscano tutti gli ingredienti delle nostre 3 pozioni.
 
 
 ## Notes:

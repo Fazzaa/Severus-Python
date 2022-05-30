@@ -7,7 +7,6 @@ class Frame:
         self.potions = {}
         self.student_ingredients = [] # memorizza le risposte corrette (ingredienti) dello studente
         self.student_name = ""
-        self.student_potion_name = "" #! domanda infame: ti chiedo il nome della pozione dandoti gli ingredienti
         self.add_potions()
         self.potion_name = pick_random(list(self.potions.keys())) # il nome della pozione oggetto dell'interrogazione
         self.mood = random.randint(0,2) # from 0 to 2 (0 = happy, 1 = neutral, 2 = angry)
