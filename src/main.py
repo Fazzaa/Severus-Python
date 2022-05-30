@@ -7,7 +7,7 @@ from audio import *
 # Genero il frame che corrisponde ad una interrogazione
 f = Frame()
 
-f.set_mood(2);
+#f.set_mood(3)
 #print(f.get_mood())
 print("\n")
 
@@ -23,6 +23,7 @@ if speech == "0":
     find_pattern_name(f, pattern_name, name)
     # Stampa frase inizio interrogazione
     print(start_interview(f))
+    print(f.get_mood())
     # Stampo le chance rimaste
     # print(f"You have {f.get_chances()} chances")
     # Chiede il primo ingrediente
@@ -42,10 +43,13 @@ if speech == "0":
                 if f.remaining_ingredients() == 1:
                     answer = input(f'{last_ingredient()}\n-> ')                
                 # Se ha inserito un solo ingrediente rispond così
-                elif len(result) == 1: 
+                rand = random.randint(0,1)
+                '''elif len(result) == 1:''' 
+                if rand == 0:
                     answer = input(f'{ask_besides_ingredient(result[0])}\n-> ')
                 else:
                     print(good_response(f))
+                    print(f.get_mood())
                     answer = input(f'{ask_ingredients(f)}\n-> ')     
         else:
             print(bad_response(f))
