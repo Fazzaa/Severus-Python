@@ -51,11 +51,17 @@ class TestSentences(unittest.TestCase):
           
     def test_all_sentence(self):
         
-        snts= ["X is contained in the potion","X are contained in the potion",
-               "X is used in the potion","X are used in the potion",
-               "X is needed in the potion","X are needed in the potion",
-               "The potion contains X","The potion uses X","The potion needs X", 
-               "X", "The answer is X"]
+        snts= ["X is contained in the potion",
+               "X are contained in the potion",
+               "X is used in the potion",
+               "X are used in the potion",
+               "X is needed in the potion",
+               "X are needed in the potion",
+               "The potion contains X",
+               "The potion uses X",
+               "The potion needs X", 
+               "X", 
+               "The answer is X"]
         file = open("data/potions.txt", "r")
         err, ok = 0,0
         for line in file:
