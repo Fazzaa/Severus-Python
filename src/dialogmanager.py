@@ -76,7 +76,7 @@ def get_vote(frame):
         if frame.get_mood() == 0 and n_vote >= 5:
             n_vote = 6
             
-    if frame.get_student_name().lower() == "harry potter":
+    if frame.get_mood() == 3:
         n_vote = 0
     
     return VOTE_DICT[n_vote]

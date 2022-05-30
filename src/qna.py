@@ -127,7 +127,7 @@ def ask_not_contain(potion):
 
 def bad_response(frame):
     n = pick_random([1,2])
-    if frame.get_mood() == 2:
+    if frame.get_mood() >= 2:
         subj = nlg_factory.createNounPhrase("you")
         if n == 1:
             verb = nlg_factory.createVerbPhrase("want")
@@ -174,7 +174,7 @@ def bad_response(frame):
 
 #* OK
 def good_response(frame):
-    if frame.get_mood() == 2:    
+    if frame.get_mood() >= 2:    
         verb_1 = nlg_factory.createVerbPhrase("be")
         subj_1 = nlg_factory.createNounPhrase("That")
         obj_1 = nlg_factory.createNounPhrase("slightly", "sufficient")
@@ -259,7 +259,7 @@ def last_ingredient():
 def valutation(frame, vote):
     if frame.get_mood() == 3:
         subj_potter = nlg_factory.createNounPhrase("you")
-        verb_potter = nlg_factory.createVerbPhrase("be like")
+        verb_potter = nlg_factory.createVerbPhrase("be just like")
         obj_potter = nlg_factory.createNounPhrase("dad")
         obj_potter.setDeterminer("your")
         s_potter_1 = nlg_factory.createClause(subj_potter, verb_potter, obj_potter)
@@ -271,10 +271,12 @@ def valutation(frame, vote):
         coord.addCoordinate(s_potter_1)
         coord.addCoordinate(f"{frame.get_student_name()}")
 
-        output = realiser.realiseSentence(coord)
-        return output
+        potter = realiser.realiseSentence(coord)
 
-    s_1 = nlg_factory.createClause(f"Well {frame.get_student_name()}")
+    if frame.get_mood() == 3:
+        s_1 = nlg_factory.createClause(f"Well")
+    else:    
+        s_1 = nlg_factory.createClause(f"Well {frame.get_student_name()}")
 
     verb_2 = nlg_factory.createVerbPhrase("go")
     verb_2.setFeature(nlg.Feature.TENSE, nlg.Tense.PAST)
@@ -282,7 +284,7 @@ def valutation(frame, vote):
     
     if vote == "Troll":
         obj_2 = nlg_factory.createNounPhrase("very", "bad")
-    if vote == "Poor" or vote == "Dreadful":
+    elif vote == "Poor" or vote == "Dreadful":
         obj_2 = nlg_factory.createNounPhrase("bad")
     elif vote == "Acceptable" or vote == "Exceeds Expectations":
         obj_2 = nlg_factory.createNounPhrase("well")
@@ -302,4 +304,12 @@ def valutation(frame, vote):
     coord.addCoordinate(s_3)
 
     output = realiser.realiseSentence(coord)
+
+    if frame.get_mood() == 3:
+        output = potter + " " + output
     return output
+
+frame = Frame()
+frame.set_student_name("Potter")
+
+print(valutation(frame, "Troll"))
