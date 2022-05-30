@@ -28,16 +28,27 @@ Abbiamo generato 11 pattern in grado di riconoscere tutti gli ingredienti presen
 Abbiamo selezionato un insieme di frasi in input e abbiamo deciso di restringere il dominio del nostro sistema a queste frasi.
 
 Le frasi su cui abbiamo lavorato sono:
+
 - X is contained in the potion
+
 - X are contained in the potion
+
 - X is used in the potion
+
 - X are used in the potion
+
 - X is needed in the potion
+
 - X are needed in the potion
+
 - The potion contains X
+
 - The potion uses X
+
 - The potion needs X
+
 - X
+
 - The answer is X
 
 Dove al posto di X ci sono i vari ingredienti delle pozioni.
