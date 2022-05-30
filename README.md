@@ -114,12 +114,16 @@ quando allo studente viene cheisto il nome.
 - `get_vote` -> Questo metodo ritorna il voto dell'interrogazione. Il voto sarà influenzato dal numero di ingredienti detti dallo studenti sulla base del totale, sul numero di errori commessi e infine, come ogni interrogazione che sis rispetti, dall'umore del professore.
 
 ### qna
-Questo file è il file in cui generiamo le frasi con la libreria di simpleNLG
+Questo file è il file in cui generiamo le frasi con la libreria di simpleNLG.
 
 ### **constants**
 Contiene tutte le costanti che abbiamo utilizzato nel dialog system, come le liste di stringhe usate e i voti da assegnare.
 
-###
+### **patterns**
+In questo file invece abbiamo messo tutti i pattern che abbiamo utilizzato per riconoscere gli ingredienti all'interno delle frasi e i nomi degli studenti.
+
+### **test**
+Questo file contiene tutti i test per verificare il corretto funzionamento del sistema di dialogo.
 
 ## I limiti del nostro sistema:
  - **Frasi in input:** Il nostro sistema allo stato attuale è in grado di riconoscre gli ingredienti delle 3 pozioni che abbiamo selezionato.
