@@ -50,7 +50,7 @@ def ask_ingredients(f):
         return ask_ingredient_contain_0(f)
     elif f.get_mood() == 1:
         return ask_ingredients_be_0(f)
-    elif f.get_mood() == 2:
+    elif f.get_mood() >= 2:
         return ask_ingredient_contain_0(f)
     else:
         pass
@@ -174,7 +174,26 @@ def bad_response(frame):
 
 #* OK
 def good_response(frame):
-    if frame.get_mood() >= 2:    
+    if frame.get_mood() == 3:
+        verb = nlg_factory.createVerbPhrase("be")
+        verb.setFeature(nlg.Feature.PERSON, nlg.Person.FIRST)
+        subj = nlg_factory.createNounPhrase("this")
+        obj = nlg_factory.createNounPhrase("the best")
+        s = nlg_factory.createClause(subj, verb, obj)
+        s.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.YES_NO)
+
+        verb_1 = nlg_factory.createVerbPhrase(f"can do {frame.get_student_name()}?")
+        verb_1.setFeature(nlg.Feature.PERSON, nlg.Person.SECOND)
+        subj_1 = nlg_factory.createNounPhrase("you")
+        s_1 = nlg_factory.createClause(subj_1, verb_1)
+
+        coord = nlg_factory.createPrepositionPhrase(s, s_1)
+
+        '''coord.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.HOW)'''
+
+        output = realiser.realiseSentence(coord)
+
+    elif frame.get_mood() == 2:    
         verb_1 = nlg_factory.createVerbPhrase("be")
         subj_1 = nlg_factory.createNounPhrase("That")
         obj_1 = nlg_factory.createNounPhrase("slightly", "sufficient")
@@ -207,7 +226,7 @@ def good_response(frame):
 
         output = realiser.realiseSentence(coord)
         
-    else:
+    elif frame.get_mood() == 0:
         verb = nlg_factory.createVerbPhrase("be")
         subj = nlg_factory.createNounPhrase("That")
         obj = nlg_factory.createNounPhrase("the correct", "ingredient")
@@ -274,7 +293,7 @@ def valutation(frame, vote):
         potter = realiser.realiseSentence(coord)
 
     if frame.get_mood() == 3:
-        s_1 = nlg_factory.createClause(f"Well")
+        s_1 = nlg_factory.createClause(f"I don't care how much you studied")
     else:    
         s_1 = nlg_factory.createClause(f"Well {frame.get_student_name()}")
 
@@ -309,7 +328,9 @@ def valutation(frame, vote):
         output = potter + " " + output
     return output
 
-frame = Frame()
+'''frame = Frame()
 frame.set_student_name("Potter")
+frame.set_mood(3)
 
-print(valutation(frame, "Troll"))
+print(good_response(frame))
+'''
