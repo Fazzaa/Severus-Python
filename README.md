@@ -154,10 +154,30 @@ Noi ci siamo limitati a generare alcune frasi, che venivano selezionate in base 
  - **Audio mode:** Come già detto il nostro sistema funziona bene sul testo scritto, mentre sull'input vocale fa più fatica. 
 Questo è causato dal fatto che gli ingredienti delle pozioni non sono parole "reali" visto che appartengono a dominio Fantasy. 
 
+## Vediamo insieme qualche simulazione di esecuzione del programma
 
+Abbiamo fatto 3 simulazioni con 3 pozioni diverse. Normalmente la variabile `mood` viene impostata in maniera randomica,
+ma in questo caso abbiamo forzato la variabile prima a 0 (prof. felice) e poi a 2 (prof. arabbiato).
+Per la terza esecuzione invece il `mood` era settato a 3 siccome, quando lo studente si chiama potter, il sistema si irrita
+subito entrando in *potter mode*. Il sistema di dialogo in questo caso è al massimo del suo stato di irritazione.
 
+Gli input dello studente sono preceduti da dal simbolo `"->"`.
 
+### Simulazione 1 - mood = 0
 
+Nella seguente esecuzione del programma possiamo notare come il tono del professore sia particolarmente tranquillo e pacato.
+
+In questo caso lo studente no ha commesso errori e infatti ha ottenuto il massimo dei voti: Outstanding.
+
+![Simulazione 1](/images/Simulazione_1.png "Simulazione 1")
+
+### Simulazione 2 - mood = 2
+
+Nella seguente esecuzione del programma possiamo notare come il tono del professore sia particolarmente tranquillo e pacato.
+
+In questo caso lo studente no ha commesso errori e infatti ha ottenuto il massimo dei voti: Outstanding.
+
+![Simulazione 2](/images/Simulazione_2.png "Simulazione 2")
 
 
 
