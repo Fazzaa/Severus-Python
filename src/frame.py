@@ -3,11 +3,11 @@ from dialogmanager import *
 
 class Frame:
     
-    def __init__(self):
+    def __init__(self, path):
         self.potions = {}
         self.student_ingredients = [] # memorizza le risposte corrette (ingredienti) dello studente
         self.student_name = ""
-        self.add_potions()
+        self.add_potions(path)
         self.potion_name = pick_random(list(self.potions.keys())) # il nome della pozione oggetto dell'interrogazione
         self.mood = random.randint(0,2) # from 0 to 2 (0 = happy, 1 = neutral, 2 = angry)
         self.chances = len(self.potions[self.potion_name]) - self.mood
@@ -52,8 +52,8 @@ class Frame:
         self.mood = mood
     
     # aggiungo la lista di pozioni al dizionario del frame leggendole da potions.txt
-    def add_potions(self):
-        file = open("data/potions.txt", "r")
+    def add_potions(self, path):
+        file = open(path, "r")
         for line in file:
             p = list(line.strip("\n").split(','))
             p_name = p[0]
