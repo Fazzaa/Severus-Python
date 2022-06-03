@@ -62,9 +62,9 @@ def start_interview(frame):
 
 def ask_ingredients(f):
     if f.get_mood() == 0:
-        return ask_ingredient_contain_0(f)
+        return kind_question(f)
     elif f.get_mood() == 1:
-        return ask_ingredients_be_0(f)
+        return ok_question(f)
     else:
         return angry_question(f)
     
@@ -73,7 +73,7 @@ def ask_ingredients(f):
 
 # frase del tipo: "Which ingredients are in Polyjuice potion ingredient's list?"
 #*OK
-def ask_ingredients_be_0(frame):
+def kind_question(frame):
     n = pick_random([1,2])
     verb = nlg_factory.createVerbPhrase("be")
     if n == 2:
@@ -97,7 +97,7 @@ def ask_ingredients_be_0(frame):
 
 # frase del tipo: "What does Polyjuice potion contain?"
 #*OK
-def ask_ingredient_contain_0(frame):
+def ok_question(frame):
     n = pick_random([1,2])
     verb = nlg_factory.createVerbPhrase(pick_random(SIN_VERBS))
     verb.setFeature(nlg.Feature.PERSON, nlg.Person.THIRD)
