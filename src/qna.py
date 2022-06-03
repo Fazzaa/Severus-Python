@@ -14,7 +14,7 @@ def greetings():
     s_1 = nlg_factory.createClause(pick_random(GREETINGS))
 
     verb = nlg_factory.createVerbPhrase("be")
-    subj = nlg_factory.createNounPhrase("your", "name")
+    subj = nlg_factory.createNounPhrase("your", "name?")
     s_2 = nlg_factory.createClause(subj, verb)
     s_2.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
     
@@ -28,8 +28,6 @@ def greetings():
 
 #* OK
 def start_interview(frame):
-    s_1 = nlg_factory.createClause(f"Well {frame.get_student_name()}")
-
     subj_2 = nlg_factory.createNounPhrase("we")
     verb_2 = nlg_factory.createVerbPhrase("start")
     verb_2.setFeature(nlg.Feature.PERSON, nlg.Person.SECOND)
@@ -37,10 +35,27 @@ def start_interview(frame):
     obj_2 = nlg_factory.createNounPhrase("the", "interview")
     s_2 = nlg_factory.createClause(subj_2, verb_2, obj_2)
 
-    coord = nlg_factory.createCoordinatedPhrase()
-    coord.setConjunction(",")
-    coord.addCoordinate(s_1)
-    coord.addCoordinate(s_2)
+    if frame.get_mood() == 3:
+        s_0 = nlg_factory.createClause(f"Ah, yes {frame.get_student_name()}")
+        if pick_random([1,2])==1:
+            s_1 = nlg_factory.createClause(f"our new ... celebrity")
+        else:
+            s_1 = nlg_factory.createClause(f"the 'Choosen One'")
+        c = nlg_factory.createCoordinatedPhrase()
+        c.setConjunction(",")
+        c.addCoordinate(s_0)
+        c.addCoordinate(s_1)
+        coord = nlg_factory.createCoordinatedPhrase()
+        coord.setConjunction(",")
+        coord.addCoordinate(c)
+        coord.addCoordinate(s_2)
+        
+    else:    
+        s_1 = nlg_factory.createClause(f"Well {frame.get_student_name()}")
+        coord = nlg_factory.createCoordinatedPhrase()
+        coord.setConjunction(",")
+        coord.addCoordinate(s_1)
+        coord.addCoordinate(s_2)
 
     output = realiser.realiseSentence(coord)
     return output
@@ -50,25 +65,30 @@ def ask_ingredients(f):
         return ask_ingredient_contain_0(f)
     elif f.get_mood() == 1:
         return ask_ingredients_be_0(f)
-    elif f.get_mood() >= 2:
-        return ask_ingredient_contain_0(f)
     else:
-        pass
-        #potter_mode()
+        return angry_question(f)
+    
         
 #! QUESTIONS
 
 # frase del tipo: "Which ingredients are in Polyjuice potion ingredient's list?"
+#*OK
 def ask_ingredients_be_0(frame):
     n = pick_random([1,2])
     verb = nlg_factory.createVerbPhrase("be")
     if n == 2:
         verb.setFeature(nlg.Feature.MODAL, "must")
-    subject = nlg_factory.createNounPhrase("ingredient")
-    subject.setPlural(True)
-    object = nlg_factory.createNounPhrase("list")
-    object.addPreModifier("in " + f"{frame.get_potion_name()}" +  " ingredient's")
-    
+    subject = nlg_factory.createNounPhrase(pick_random(SIN_INGREDIENT))
+
+    if n == 1:
+        object = nlg_factory.createNounPhrase(pick_random(SIN_LIST))
+        object.addPreModifier("in " + f"{frame.get_potion_name()}" +  f" {pick_random([SIN_INGREDIENT])}'s")
+    else:
+        if not frame.empty_frame():
+            object = nlg_factory.createNounPhrase(f"in the {pick_random(SIN_POTION)}")
+        else:
+            object = nlg_factory.createNounPhrase(f"in the {frame.get_potion_name()}")
+
     sentence = nlg_factory.createClause(subject, verb, object)
     sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_SUBJECT)
     
@@ -76,39 +96,53 @@ def ask_ingredients_be_0(frame):
     return output
 
 # frase del tipo: "What does Polyjuice potion contain?"
+#*OK
 def ask_ingredient_contain_0(frame):
-    verb = nlg_factory.createVerbPhrase("contain")
+    n = pick_random([1,2])
+    verb = nlg_factory.createVerbPhrase(pick_random(SIN_VERBS))
     verb.setFeature(nlg.Feature.PERSON, nlg.Person.THIRD)
-    subject = nlg_factory.createNounPhrase(f"{frame.get_potion_name()}")
+    if not frame.empty_frame():
+        verb.addModifier("else")
+        if n == 1:
+            subject = nlg_factory.createNounPhrase(f"{frame.get_potion_name()}")
+        else:
+            subject = nlg_factory.createNounPhrase(f"the {pick_random(SIN_POTION)}")
+    else:
+        subject = nlg_factory.createNounPhrase(f"{frame.get_potion_name()}")
+        
     sentence = nlg_factory.createClause(subject, verb)
     sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
     output = realiser.realiseSentence(sentence)
     return output
 
-# frase del tipo: "What does Polyjuice potion else contain?"
-def ask_ingredient_contain_else(frame):
-    verb = nlg_factory.createVerbPhrase("contain")
-    verb.setFeature(nlg.Feature.PERSON, nlg.Person.THIRD)
-    verb.addModifier("else")
-    subject = nlg_factory.createNounPhrase(f"{frame.get_potion_name()}")
-    sentence = nlg_factory.createClause(subject, verb)
-    sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
+# frase del tipo: "Tell me the ingredients of the potion"
+#*OK
+def angry_question(frame):
+    n = pick_random([1,2,3])
+    verb = nlg_factory.createVerbPhrase("Tell")
+    verb.setFeature(nlg.Feature.PERSON, nlg.Person.SECOND)
+    verb.addPostModifier("me")
+    if frame.empty_frame():
+        obj = nlg_factory.createNounPhrase(f"{pick_random(SIN_INGREDIENT)}")
+        obj.addPreModifier("the")
+        obj.addPostModifier(f"of the {frame.get_potion_name()}")
+    else:
+        if n == 3:
+            obj = nlg_factory.createNounPhrase("one,")
+            obj.addPostModifier(f"{pick_random(SIN_INSULTS)}")
+        elif n == 2:
+            obj = nlg_factory.createNounPhrase(f"{pick_random(SIN_INGREDIENT)}")
+            obj.addPostModifier(f"of the {frame.get_potion_name()}")
+        else:
+            obj = nlg_factory.createNounPhrase(f"{pick_random(SIN_INGREDIENT)}")
+            obj.addPostModifier(f"of the {pick_random(SIN_POTION)}") 
+        
+        obj.addPreModifier("another")
+    
+    sentence = nlg_factory.createClause(verb, obj)
     output = realiser.realiseSentence(sentence)
     return output
-
-# frase del tipo: "Which ingredient between Crisopa fly and Murtlap's tentacle is in Polyjuice potion ingredient's list?"
-def ask_ingredient_between(potion, ingredient1, ingredient2):
-    verb = nlg_factory.createVerbPhrase("be")
-    verb.addPreModifier("Which")
-    subject = nlg_factory.createNounPhrase("ingredient")
-    subject.addComplement("between " + f"{ingredient1}" + " and " + f"{ingredient2}")
-    object = nlg_factory.createNounPhrase("list")
-    object.addPreModifier("in " + f"{potion}" +  " ingredient's")
-    sentence = nlg_factory.createClause(subject, verb, object)
-    sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.YES_NO)
-    output = realiser.realiseSentence(sentence)
-    return output
-
+    
 #! ANSWERS
 
 def bad_response(frame):
@@ -151,7 +185,7 @@ def bad_response(frame):
             verb = nlg_factory.createVerbPhrase("be")
             verb.setNegated(True)
             subj = nlg_factory.createNounPhrase("That")
-            obj = nlg_factory.createNounPhrase("the correct", "ingredient")
+            obj = nlg_factory.createNounPhrase(f"the {pick_random(SIN_CORRECT)}", f"{pick_random(SIN_INGREDIENT)}")
 
             sentence = nlg_factory.createClause(subj, verb, obj)
             
@@ -202,7 +236,7 @@ def good_response(frame):
 
         subj_2 = nlg_factory.createNounPhrase("it")
         verb_2 = nlg_factory.createVerbPhrase("be")
-        obj_2 = nlg_factory.createNounPhrase("correct")
+        obj_2 = nlg_factory.createNounPhrase(f"{pick_random(SIN_CORRECT)}")
         s_2 = nlg_factory.createClause(subj_2, verb_2, obj_2)
 
         coord = nlg_factory.createCoordinatedPhrase()
@@ -215,7 +249,7 @@ def good_response(frame):
     elif frame.get_mood() == 0:
         verb = nlg_factory.createVerbPhrase("be")
         subj = nlg_factory.createNounPhrase("That")
-        obj = nlg_factory.createNounPhrase("the correct", "ingredient")
+        obj = nlg_factory.createNounPhrase(f"the {pick_random(SIN_CORRECT)}", f"{pick_random(SIN_INGREDIENT)}")
         s_1 = nlg_factory.createClause(subj, verb, obj)
 
         output = realiser.realiseSentence(s_1)
@@ -227,17 +261,17 @@ def ask_besides_ingredient(ingredient):
 
     subj_2 = nlg_factory.createNounPhrase("it")
     verb_2 = nlg_factory.createVerbPhrase("be")
-    obj_2 = nlg_factory.createNounPhrase("correct")
+    obj_2 = nlg_factory.createNounPhrase(f"{pick_random(SIN_CORRECT)}")
     s_2 = nlg_factory.createClause(subj_2, verb_2, obj_2)
 
     coord = nlg_factory.createCoordinatedPhrase()
     coord.setConjunction(",")
     coord.addCoordinate(s_0)
     coord.addCoordinate(s_2)
-    subj = nlg_factory.createNounPhrase("the", "potion")
-    verb = nlg_factory.createVerbPhrase("contain")
-    obj = nlg_factory.createNounPhrase("ingredient")
-    p_2 = nlg_factory.createNounPhrase(f"besides {ingredient}")
+    subj = nlg_factory.createNounPhrase("the", f"{pick_random(SIN_POTION)}")
+    verb = nlg_factory.createVerbPhrase(f"{pick_random(SIN_VERBS)}")
+    obj = nlg_factory.createNounPhrase(f"{pick_random(SIN_INGREDIENT)}")
+    p_2 = nlg_factory.createNounPhrase(f"{pick_random(SIN_BESIDES)} {ingredient}")
     s_1 = nlg_factory.createClause(subj, verb, obj)
     s_1.addPostModifier(p_2)
     s_1.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
@@ -245,16 +279,15 @@ def ask_besides_ingredient(ingredient):
     output = realiser.realiseSentence(coord) + " " + realiser.realiseSentence(s_1)
     return output
 
-
 def last_ingredient():
     verb = nlg_factory.createVerbPhrase("be")
     subj = nlg_factory.createNounPhrase("That")
-    obj = nlg_factory.createNounPhrase("the correct", "ingredient")
+    obj = nlg_factory.createNounPhrase(f"the {pick_random(SIN_CORRECT)}", f"{pick_random(SIN_INGREDIENT)}")
     s_1 = nlg_factory.createClause(subj, verb, obj)
     
     verb_2 = nlg_factory.createVerbPhrase("be")
     verb_2.setFeature(nlg.Feature.TENSE, nlg.Tense.PRESENT)
-    subj_2 = nlg_factory.createNounPhrase("the last", "ingredient")
+    subj_2 = nlg_factory.createNounPhrase("the last", f"{pick_random(SIN_INGREDIENT)}")
     s_2 = nlg_factory.createClause(subj_2, verb_2)
     s_2.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
     output = realiser.realiseSentence(s_1) + " " + realiser.realiseSentence(s_2)
