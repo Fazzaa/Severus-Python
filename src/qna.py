@@ -346,10 +346,3 @@ def valutation(frame, vote):
     if frame.get_mood() == 3:
         output = potter + " " + output
     return output
-
-'''frame = Frame()
-frame.set_student_name("Potter")
-frame.set_mood(3)
-
-print(good_response(frame))
-'''

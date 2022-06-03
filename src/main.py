@@ -18,13 +18,14 @@ while not f.full_frame() and f.get_chances() > 0:
     if f.check_response(result):
         if not f.full_frame():
             if f.remaining_ingredients() == 1:
-                answer = input(f'{last_ingredient()}\n-> ')                
-            rand = random.randint(0,1)
-            if rand == 0:
-                answer = input(f'{ask_besides_ingredient(result[0])}\n-> ')
-            else:
-                print(good_response(f))
-                answer = input(f'{ask_ingredients(f)}\n-> ')     
+                answer = input(f'{last_ingredient()}\n-> ')
+            else:                    
+                rand = random.randint(0,1)
+                if rand == 0:
+                    answer = input(f'{ask_besides_ingredient(result[0])}\n-> ')
+                else:
+                    print(good_response(f))
+                    answer = input(f'{ask_ingredients(f)}\n-> ')     
     else:
         print(bad_response(f))
         f.dec_chances()
