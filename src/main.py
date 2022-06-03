@@ -23,6 +23,7 @@ while not f.full_frame() and f.get_chances() > 0:
             if rand == 0:
                 answer = input(f'{ask_besides_ingredient(result[0])}\n-> ')
             elif rand == 1:
+                print(good_response(f))
                 answer = input(f'{ask_ingredient_contain_else(f)}\n-> ')
             else:
                 print(good_response(f))
