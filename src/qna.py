@@ -61,10 +61,8 @@ def ask_ingredients(f):
 # frase del tipo: "Which ingredients are in Polyjuice potion ingredient's list?"
 def ask_ingredients_be_0(frame):
     n = pick_random([1,2])
-    if n == 1:
-        verb = nlg_factory.createVerbPhrase("be")
+    verb = nlg_factory.createVerbPhrase("be")
     if n == 2:
-        verb = nlg_factory.createVerbPhrase("be")
         verb.setFeature(nlg.Feature.MODAL, "must")
     subject = nlg_factory.createNounPhrase("ingredient")
     subject.setPlural(True)
@@ -88,11 +86,11 @@ def ask_ingredient_contain_0(frame):
     return output
 
 # frase del tipo: "What does Polyjuice potion else contain?"
-def ask_ingredient_contain_else(potion):
+def ask_ingredient_contain_else(frame):
     verb = nlg_factory.createVerbPhrase("contain")
     verb.setFeature(nlg.Feature.PERSON, nlg.Person.THIRD)
     verb.addModifier("else")
-    subject = nlg_factory.createNounPhrase(f"{potion}")
+    subject = nlg_factory.createNounPhrase(f"{frame.get_potion_name()}")
     sentence = nlg_factory.createClause(subject, verb)
     sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
     output = realiser.realiseSentence(sentence)
@@ -108,18 +106,6 @@ def ask_ingredient_between(potion, ingredient1, ingredient2):
     object.addPreModifier("in " + f"{potion}" +  " ingredient's")
     sentence = nlg_factory.createClause(subject, verb, object)
     sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.YES_NO)
-    output = realiser.realiseSentence(sentence)
-    return output
-
-def ask_not_contain(potion):
-    sentence = nlg_factory.createClause()
-    sentence.setSubject(f"{potion}")
-    sentence.setVerb("contain")
-    sentence.setObject("Crisopa Fly")
-    sentence.setNegated(True)
-    sentence.setFeature(nlg.Feature.TENSE, nlg.Tense.PRESENT)
-    sentence.setFeature(nlg.Feature.INTERROGATIVE_TYPE, nlg.InterrogativeType.WHAT_OBJECT)
-    sentence.addComplement("at all")
     output = realiser.realiseSentence(sentence)
     return output
 
