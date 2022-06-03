@@ -72,8 +72,6 @@ class Frame:
         return res
 
     # controllo che l'ingrediente sia corretto e se lo è lo aggiungo alle risposte corrette (se non è già stato detto)
-    #! Problema, se arriva una lista di ingredienti e uno è giusto e uno sbagliato?
-    #TODO:lavorare su stemming e rimozioni parti non necessarie 
     def check_response(self, ingredient):
         ''' Controlla se l'ingrediente è corretto e se lo è aggiunge alla lista di risposte corrette '''
         res = False
@@ -86,6 +84,9 @@ class Frame:
         
     def full_frame(self):
         return self.get_ingredients_number() <= len(self.get_student_ingredients())
+
+    def empty_frame(self):
+        return True if len(self.student_ingredients) == 0 else False
 
     def remaining_ingredients(self):
         return self.get_ingredients_number() - len(self.get_student_ingredients())
