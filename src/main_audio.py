@@ -25,15 +25,16 @@ while not f.full_frame() and f.get_chances() > 0:
             if f.remaining_ingredients() == 1:
                 text = last_ingredient()
                 text_to_speech(text)
-            rand = random.randint(0,1)
-            if rand == 0:
-                text = ask_besides_ingredient(result[0])
-                text_to_speech(text)
-                answer = speech_recognition()
             else:
-                text = good_response(f)
-                text_to_speech(text)
-                answer = speech_recognition()    
+                rand = random.randint(0,1)
+                if rand == 0:
+                    text = ask_besides_ingredient(result[0])
+                    text_to_speech(text)
+                    answer = speech_recognition()
+                else:
+                    text = good_response(f)
+                    text_to_speech(text)
+                    answer = speech_recognition()    
     else:
         text = bad_response(f)
         text_to_speech(text)
