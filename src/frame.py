@@ -73,7 +73,6 @@ class Frame:
 
     # controllo che l'ingrediente sia corretto e se lo è lo aggiungo alle risposte corrette (se non è già stato detto)
     def check_response(self, ingredient):
-        ''' Controlla se l'ingrediente è corretto e se lo è aggiunge alla lista di risposte corrette '''
         res = False
         for el in ingredient:
             for i in self.potions[self.potion_name]:

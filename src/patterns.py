@@ -9,7 +9,6 @@ pattern_name = [
     }
 ]
 
-##########################
 #PATTERN PER FRASI ATTIVE#
 pattern_aux_0 = [
     {"RIGHT_ID": "aux",
@@ -129,7 +128,6 @@ pattern_verb_3 = [
     }
 ] 
 
-###########################
 #PATTERN PER FRASI PASSIVE#
 passive_pattern = [
     {"RIGHT_ID": "passive",
