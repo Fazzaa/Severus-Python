@@ -82,7 +82,7 @@ def kind_question(frame):
 
     if n == 1:
         object = nlg_factory.createNounPhrase(pick_random(SIN_LIST))
-        object.addPreModifier("in " + f"{frame.get_potion_name()}" +  f" {pick_random([SIN_INGREDIENT])}'s")
+        object.addPreModifier("in " + f"{frame.get_potion_name()}" +  f" {pick_random(SIN_INGREDIENT)}'s")
     else:
         if not frame.empty_frame():
             object = nlg_factory.createNounPhrase(f"in the {pick_random(SIN_POTION)}")
