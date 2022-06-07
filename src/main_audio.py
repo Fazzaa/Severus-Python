@@ -1,5 +1,5 @@
 from frame import Frame
-from dialogmanager import *
+from matcher import *
 from patterns import *
 from qna import *
 from audio import *

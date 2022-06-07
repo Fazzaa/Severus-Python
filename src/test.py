@@ -1,6 +1,6 @@
 import unittest
 from frame import Frame
-from dialogmanager import *
+from matcher import *
 from patterns import *
 
 class TestFrameMethods(unittest.TestCase):

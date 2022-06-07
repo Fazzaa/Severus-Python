@@ -1,6 +1,6 @@
 # Piton question and answer
 import simplenlg as nlg
-from dialogmanager import *
+from matcher import *
 from constants import *
 from frame import Frame
 

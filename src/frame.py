@@ -1,5 +1,5 @@
 import random
-from dialogmanager import *
+from matcher import *
 
 class Frame:
     
